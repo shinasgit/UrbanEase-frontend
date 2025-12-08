@@ -1,0 +1,9 @@
+
+*{
+  /* font-family: "Tinos", serif; */
+  font-family: "Figtree", sans-serif;
+}
+
+@import "flowbite";
+@import "tailwindcss";
+
