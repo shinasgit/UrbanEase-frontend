@@ -61,7 +61,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center bg-gray-100 rounded-xl px-3 py-1.5 shadow-sm">
-          <Button onClick={() => setOpenModal(true)}>
+          <Button className="focus:ring-0 focus:outline-none" onClick={() => setOpenModal(true)}>
             <div className="flex flex-col text-right mr-3">
               <span className="font-medium text-gray-800 text-sm">
                 Cora Richards

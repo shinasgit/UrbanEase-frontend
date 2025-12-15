@@ -31,14 +31,14 @@ function Appliances() {
 
   {/* Washing Machine */}
   <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    <img
+    {/* <img
       src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"
       alt="Washing Machine"
-      className="w-20"
-    />
+      className="w-20"/> */}
 
     <div className="flex-1">
       <h2 className="text-xl font-bold text-gray-900">Washing Machine</h2>
+      <p className="text-gray-800">Brand:LG</p>
       <p className="text-gray-600 mt-1">
       Semi-Automatic 
       </p>
@@ -52,14 +52,15 @@ function Appliances() {
 
   {/* wash 2  */}
   <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    <img
+    {/* <img
       src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"
       alt="Washing Machine"
       className="w-20"
-    />
+    /> */}
 
     <div className="flex-1">
       <h2 className="text-xl font-bold text-gray-900">Washing Machine</h2>
+      <p className="text-gray-800">Brand:LG</p>
       <p className="text-gray-600 mt-1">
         Automatic
       </p>
@@ -73,14 +74,15 @@ function Appliances() {
 
   {/* Refrigerator */}
   <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    <img
+    {/* <img
       src="https://cdn-icons-png.flaticon.com/512/1047/1047716.png"
       alt="Refrigerator"
       className="w-20"
-    />
+    /> */}
 
     <div className="flex-1">
       <h2 className="text-xl font-bold text-gray-900">Refrigerator</h2>
+      <p className="text-gray-800">Brand:LG</p>
       <p className="text-gray-600 mt-1">
         Single Door / Double Door / Mini-Fridge models.
       </p>
@@ -94,11 +96,11 @@ function Appliances() {
 
   {/* Stove / Gas Cylinder */}
   <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/3182/3182619.png"
+    {/* <img
+      src=""
       alt="Stove"
       className="w-20"
-    />
+    /> */}
 
     <div className="flex-1">
       <h2 className="text-xl font-bold text-gray-900">Stove / Gas Cylinder</h2>
