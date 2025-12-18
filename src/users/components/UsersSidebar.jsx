@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function UsersSidebar() {
   const [switch1, setSwitch1] = useState(false);
   return (
-    <div className="fixed top-24 left-6 w-56 h-[85vh]">
+    <div className="fixed top-24 left-4 w-56 h-[85vh]">
       <div className="bg-white h-full p-6 rounded-3xl shadow-xl border border-gray-200 flex flex-col justify-between">
 
         <nav className="space-y-2">
@@ -62,7 +62,7 @@ export default function UsersSidebar() {
               <span>Dark Mode</span>
             </div>
             <div className="flex max-w-md flex-col items-start gap-4">
-      <ToggleSwitch checked={switch1} label="" onChange={setSwitch1} /></div>
+            <ToggleSwitch checked={switch1} label="" onChange={setSwitch1} /></div>
            
           </button>
         </div>

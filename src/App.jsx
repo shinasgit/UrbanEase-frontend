@@ -16,6 +16,10 @@ import AdminUsers from './admin/pages/AdminUsers'
 import AdminProviders from './admin/pages/AdminProviders'
 import PaymentSuccess from './users/pages/PaymentSuccess'
 import PaymentError from './users/pages/PaymentError'
+import AdminProfile from './admin/pages/AdminProfile'
+import Profile from './users/pages/Profile'
+import EditProf from './users/components/EditProf'
+import AdminBooking from './admin/pages/AdminBooking'
 
 
 // import ConnectionPage from './users/pages/ConnectionPage'
@@ -36,8 +40,10 @@ function App() {
       <Route path={'/login'} element={<Auth/>}/>
       <Route path='/register' element={<Auth register/>}/>
       <Route path={"/pnf"} element={<Pnf/>}/>
+      <Route path={"/profile"} element={<Profile/>}/>
       <Route path={"/payment-success"} element={<PaymentSuccess/>}/>
       <Route path={"/payment-error"} element={<PaymentError/>}/>
+      <Route path={"/editprof"} element={<EditProf/>}/>
       {/* <Route path={"/ConnectionPage"} element={<ConnectionPage/>}/> */}
 
       {/* servise provider module 2 */}
@@ -48,6 +54,10 @@ function App() {
       <Route path={"/admin-home"} element={<AdminHome/>}/>
       <Route path={"/admin-users"} element={<AdminUsers/>}/>
       <Route path={"/admin-providers"} element={<AdminProviders/>}/>
+      <Route path={"/admin-profile"} element={<AdminProfile/>}/>
+      <Route path={"/admin-booking"} element={<AdminBooking/>}/>
+
+      
     </Routes>
     </>
   )

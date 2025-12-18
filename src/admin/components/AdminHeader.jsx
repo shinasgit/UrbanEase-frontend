@@ -64,35 +64,53 @@ export default function AdminHeader() {
         </div>
 
         {/* Modal */}
-        <Modal
-          show={openModal}
-          size="md"
-          onClose={() => setOpenModal(false)}
-          popup
-        >
-          <ModalHeader />
-          <ModalBody>
-            <div className="text-center">
-              <Card className="max-w-sm mx-auto ">
-                <img
-                  src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
-                  className="w-24 h-24 mx-auto rounded-full shadow"
-                  alt="profile"
-                />
-                <h5 className="mt-3 text-xl  font-semibold text-gray-50">
-                  Admin
-                </h5>
-                <p className="text-sm text-gray-500">Visual Designer</p>
-                <Button className="bg-green-600 hover:bg-green-800 text-white focus:ring-0 w-50%">
-                  Edit Profile
-                </Button>
-                <Button className="bg-red-600 hover:bg-red-800 text-white focus:ring-0 w-50%">
-                  Logout
-                </Button>
-              </Card>
-            </div>
-          </ModalBody>
-        </Modal>
+       <Modal
+  show={openModal}
+  size="md"
+  onClose={() => setOpenModal(false)}
+  popup
+>
+  <ModalHeader />
+
+  <ModalBody>
+    <div className="flex justify-center bg-white">
+      <Card className="max-w-sm w-full !bg-white shadow-none border-none">
+        <div className="flex flex-col items-center gap-3 py-6 bg-white">
+
+          {/* Profile Image */}
+          <img
+            src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+            className="w-24 h-24 rounded-full shadow"
+            alt="profile"
+          />
+
+          {/* Name */}
+          <h5 className="text-xl font-semibold text-gray-800">
+            Admin
+          </h5>
+
+          {/* Role */}
+          <p className="text-sm text-gray-500">
+            Visual Designer
+          </p>
+
+          {/* Buttons */}
+          <div className="flex gap-3 mt-4 w-full justify-center">
+            <Button className="bg-green-600 hover:bg-green-700 text-white focus:ring-0 px-6">
+              Edit Profile
+            </Button>
+
+            <Button className="bg-red-600 hover:bg-red-700 text-white focus:ring-0 px-6">
+              Logout
+            </Button>
+          </div>
+
+        </div>
+      </Card>
+    </div>
+  </ModalBody>
+</Modal>
+
       </div>
     </header>
   );

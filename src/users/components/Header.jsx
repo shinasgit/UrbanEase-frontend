@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CiChat1 } from "react-icons/ci";
 import { IoNotificationsOutline } from "react-icons/io5";
 
@@ -9,6 +9,16 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Card, Dropdown, DropdownItem } from "flowbite-react";
 
 export default function Header() {
+
+  const [userData , setUserData]= useState({})
+  let userDetails = JSON.parse(sessionStorage.getItem('userDetails'))
+  console.log(userDetails);
+  
+
+  useEffect(()=>{
+    setUserData(userDetails)
+  },[])
+
   const [openModal, setOpenModal] = useState(false);
   return (
     <header
@@ -60,14 +70,22 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="flex items-center bg-gray-100 rounded-xl px-3 py-1.5 shadow-sm">
+        {/* <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity">
+              Sign In
+            </button> */}
+
+        {
+          userData?
+          <div className="flex items-center bg-gray-100 rounded-xl px-3 py-1.5 shadow-sm">
           <Button className="focus:ring-0 focus:outline-none" onClick={() => setOpenModal(true)}>
             <div className="flex flex-col text-right mr-3">
               <span className="font-medium text-gray-800 text-sm">
-                Cora Richards
+                {userData.name}
               </span>
-              <span className="text-xs text-gray-500">cora.r@edu.com</span>
+              <span className="text-xs text-gray-500">shinasshoukath756@gamil.com</span>
             </div>
+
+            
 
             <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
@@ -105,10 +123,10 @@ export default function Header() {
 
         <div className="mt-4 flex space-x-3 lg:mt-6">
           <a
-            href="#"
+            href="/profile"
             className="inline-flex items-center rounded-lg bg-cyan-700 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-800"
           >
-            Add friend
+            Edit Profile
           </a>
 
           <a
@@ -124,7 +142,23 @@ export default function Header() {
 </ModalBody>
 
           </Modal>
-        </div>
+        </div> 
+        :
+
+        <div className=" flex">
+              <a
+                href="/login"
+                className="px-8 py-3  text-blue-100 font-semibold rounded-xl bg-blue-800 hover:bg-gray-100 hover:text-blue-800 transition"
+              >
+                Login
+              </a>
+              
+            </div>
+          
+          
+        }
+
+        
       </div>
     </header>
   );

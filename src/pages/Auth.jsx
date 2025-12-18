@@ -1,66 +1,195 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Label, TextInput } from "flowbite-react";
+import Hyperspeed from "./Hyperspeed";
+import { useNavigate } from "react-router-dom";
+import { loginUserAPI, registerUserAPI } from "../services/allAPI";
+import { ToastContainer, toast } from "react-toastify";
 
-function Auth({register}) {
+function Auth({ register }) {
   console.log(register);
-  
+
+  //register-part
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  console.log(userData);
+
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    console.log(userData);
+    if (!userData.username || !userData.email || !userData.password) {
+      toast.warn("Please fill the fields!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      try {
+        const response = await registerUserAPI(userData);
+        console.log(response);
+
+        if (response.status === 200) {
+          // alert("Registered Successfully")
+          toast.success("Login Successful", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+
+          setUserData({ username: "", email: "", password: "" });
+
+        } else {
+          toast.error("Registration Failed!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          console.log(response.response.data.message);
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+  };
+
+  const handleLogin = async () => {
+    if (!userData.email || !userData.password) {
+      toast.warn("Please fill the fields!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      try {
+        const response = await loginUserAPI(userData);
+        console.log(response);
+        if (response.status === 200) {
+          sessionStorage.setItem(
+            "userDetails",
+            JSON.stringify(response.data.user)
+          );
+
+          toast.success("Login Successful", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          if(response.data.user.role == "UEAdmin"){
+            setTimeout(() => {
+            navigate("/admin-home");
+          }, 2000);
+          }
+          else if(response.data.user.role == "UEProvider"){
+            setTimeout(() => {
+            navigate("/homeSP");
+          }, 2000);
+          }
+          else{
+            setTimeout(() => {
+            navigate("/housebook");
+          }, 2000);
+          }
+
+
+          
+        } else {
+          toast.error("Login Failed!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-teal-50 flex items-center justify-center px-4">
       <Card className="w-full max-w-md shadow-xl border border-gray-200  !bg-white ">
-        {
-          register ? (
-            
-        <h1 className="text-3xl font-bold text-center text-blue-500">
-          REGISTER
-        </h1>
-        
-          ) : (
-            <h1 className="text-3xl font-bold text-center text-blue-500">
-          LOGIN
-        </h1>
-        
-          )
-        }
+        {register ? (
+          <h1 className="text-3xl font-bold text-center text-blue-800">
+            REGISTER
+          </h1>
+        ) : (
+          <h1 className="text-3xl font-bold text-center text-blue-800">
+            LOGIN
+          </h1>
+        )}
 
-        {
-          register ? (
-            
-        <h3 className="text-center text-xl text-gray-500 mb-4">
-          Register your Account
-        </h3>
-        
-          ) : (
-            <h3 className="text-center text-xl text-gray-500 mb-4">
-          Login to your Account
-        </h3>
-        
-          )
-        }
-
-
+        {register ? (
+          <h3 className="text-center text-xl text-gray-500 mb-4">
+            Register your Account
+          </h3>
+        ) : (
+          <h3 className="text-center text-xl text-gray-500 mb-4">
+            Login to your Account
+          </h3>
+        )}
 
         <form className="flex flex-col gap-4">
-
-          {
-            register && (
-              
-          <div>
-            <Label htmlFor="Username" className="mb-1 block"  />
-            <TextInput
-              
-              type="text"
-              placeholder="Enter Your Username"
-              required
-              style={{ color: "black" }}
-            />
-          </div>
-            )
-          }
+          {register && (
+            <div>
+              <Label htmlFor="Username" className="mb-1 block" />
+              <TextInput
+                onChange={(e) =>
+                  setUserData({ ...userData, username: e.target.value })
+                }
+                type="text"
+                placeholder="Enter Your Username"
+                required
+                style={{ color: "black" }}
+              />
+            </div>
+          )}
 
           {/* Email */}
           <div>
             <Label htmlFor="email" className="mb-1 block" value="Email" />
             <TextInput
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
               id="email"
               type="email"
               placeholder="Enter Your E-mail"
@@ -72,7 +201,16 @@ function Auth({register}) {
           {/* Password */}
           <div>
             <Label htmlFor="password" className="mb-1 block" value="Password" />
-            <TextInput id="password" type="password" required placeholder="Enter Your Password" style={{ color: "black" }}/>
+            <TextInput
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+              id="password"
+              type="password"
+              required
+              placeholder="Enter Your Password"
+              style={{ color: "black" }}
+            />
           </div>
 
           {/* Forgot Password */}
@@ -85,15 +223,23 @@ function Auth({register}) {
             </a>
           </div>
 
-          {
-            register ? (
-          <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-            Register
-          </Button>):(
-          <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-            Login
-          </Button>)
-          }
+          {register ? (
+            <Button
+              onClick={handleRegister}
+              type="button"
+              className="bg-blue-800 hover:bg-blue-700"
+            >
+              Register
+            </Button>
+          ) : (
+            <Button
+              onClick={handleLogin}
+              type="button"
+              className="bg-blue-800 hover:bg-blue-700"
+            >
+              Login
+            </Button>
+          )}
 
           {/* Divider */}
           <div className="flex items-center gap-2">
@@ -103,32 +249,41 @@ function Auth({register}) {
           </div>
 
           {/* Register Link */}
-          {
-            register ? 
-            (
-              <p className="text-center text-sm text-gray-600">
-            Already have an account?
-            <a
-              href="/login"
-              className="ml-1 text-blue-600 font-medium hover:underline"
-            >
-              Login
-            </a>
-          </p>
-            ) : (
-              <p className="text-center text-sm text-gray-600">
-            Don’t have an account?
-            <a
-              href="/register"
-              className="ml-1 text-blue-600 font-medium hover:underline"
-            >
-              Register
-            </a>
-          </p>
-            )
-          }
+          {register ? (
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?
+              <a
+                href="/login"
+                className="ml-1 text-blue-800 font-medium hover:underline"
+              >
+                Login
+              </a>
+            </p>
+          ) : (
+            <p className="text-center text-sm text-gray-600">
+              Don’t have an account?
+              <a
+                href="/register"
+                className="ml-1 text-blue-800 font-medium hover:underline"
+              >
+                Register
+              </a>
+            </p>
+          )}
         </form>
       </Card>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

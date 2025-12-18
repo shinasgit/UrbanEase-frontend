@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
 import UsersSidebar from "../components/UsersSidebar";
@@ -6,10 +8,16 @@ import { IoHomeOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import Details from "./Details";
 import { Carousel } from "flowbite-react";
+import { Pagination } from "flowbite-react";
+import { useState } from "react";
 
 
 
 function HouseBooking() {
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+const onPageChange = (page) => setCurrentPage(page);
   return (
     <div>
       {/* FIXED NAVBAR */}
@@ -237,7 +245,25 @@ function HouseBooking() {
 
               </div>
             </div>
+        
           </div>
+              <div className="flex justify-center">
+  <Pagination
+    currentPage={currentPage}
+    totalPages={100}
+    onPageChange={onPageChange}
+    className="
+      [&_button]:bg-blue-600
+      [&_button]:text-white
+      [&_button]:border-blue-800
+      [&_button:hover]:bg-blue-900
+      [&_button[aria-current='page']]:bg-blue-900
+      [&_button[aria-current='page']]:text-white
+    "
+  />
+</div>
+
+
           {/* FOOTER */}
           <UrbanFooter />
         </div>

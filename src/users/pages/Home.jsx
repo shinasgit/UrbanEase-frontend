@@ -1,111 +1,137 @@
 import React from "react";
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
-import UsersSidebar from "../components/UsersSidebar";
-
+import { FaHome, FaTools, FaBroom } from "react-icons/fa";
 
 function Home() {
   return (
     <>
-      <div className="flex pt-24">
-        {" "}
-        {/* Push content below fixed header */}
-        {/* <UsersSidebar /> */}
-        <main className=" w-full">
-          {" "}
-          {/* Push content beside sidebar */}
-          {/* Hero */}
-          <section className="bg-white py-16">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-5 flex items-center justify-center gap-3">
-                <img src="/logo.png" alt="logo" className="w-15 h-12" />
-                Urban Ease
-              </h1>
+      {/* HEADER */}
+      <Header />
 
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900">
-                Find & Book Local Homes and Services
+      {/* MAIN CONTENT */}
+      <main className="pt-24">
+
+        {/* HERO SECTION */}
+        <section className="rounded  bg-gradient-to-r from-blue-300 to-blue-800 text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <div className="flex justify-center items-center gap-3 mb-4">
+              <img src="/logo.png" alt="logo" className="w-14 h-14" />
+              <h1 className="text-4xl sm:text-5xl font-extrabold">
+                UrbanEase
               </h1>
-              <p className="mt-4 text-lg text-gray-600">
-                Quick, reliable and affordable bookings — cleaning, appliances,
-                rentals and more, all in one place.
-              </p>
-              <div className="mt-8 flex justify-center gap-4">
-                <a
-                  href="/login"
-                  className="inline-block px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  Get Started
-                </a>
+            </div>
+
+            <p className="text-xl sm:text-2xl font-semibold">
+              Find & Book Local Homes and Services
+            </p>
+
+            <p className="mt-4 text-gray-100 max-w-2xl mx-auto">
+              Quick, reliable and affordable bookings for houses, appliances,
+              and local services — all in one place.
+            </p>
+
+            <div className="mt-8 flex justify-center gap-4">
+              <a
+                href="/login"
+                className="px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-gray-100 transition"
+              >
+                Get Started
+              </a>
+              
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURES */}
+        <section className="py-16 bg-gray-100">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+              Why Choose UrbanEase?
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 className="text-lg font-semibold mb-2">Easy Booking</h3>
+                <p className="text-gray-600 text-sm">
+                  Book houses and services in just a few clicks with transparent
+                  pricing.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 className="text-lg font-semibold mb-2">
+                  Verified Providers
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  All service providers are verified for safety and quality.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 className="text-lg font-semibold mb-2">Secure Payments</h3>
+                <p className="text-gray-600 text-sm">
+                  Multiple payment options with complete transaction security.
+                </p>
               </div>
             </div>
-          </section>
-          {/* Features */}
-          <section className="py-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Easy Booking
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Reserve homes or services in a few clicks with clear pricing
-                    and availability.
-                  </p>
-                </div>
-                <div className="p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Verified Providers
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-600">
-                    We verify providers so you get safe, quality service every
-                    time.
-                  </p>
-                </div>
-                <div className="p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Secure Payments
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Pay securely through our platform using multiple payment
-                    options.
-                  </p>
-                </div>
+          </div>
+        </section>
+
+        {/* SERVICES */}
+        <section id="services" className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+              Popular Services
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
+                <FaHome className="text-4xl text-blue-600 mx-auto mb-4" />
+                <h4 className="font-semibold text-lg">House Booking</h4>
+                <p className="mt-2 text-sm text-gray-600">
+                  Find PGs, hostels, flats and apartments easily.
+                </p>
+              </div>
+
+              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
+                <FaTools className="text-4xl text-blue-600 mx-auto mb-4" />
+                <h4 className="font-semibold text-lg">Appliances</h4>
+                <p className="mt-2 text-sm text-gray-600">
+                  Rent or repair appliances like washing machines and fridges.
+                </p>
+              </div>
+
+              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
+                <FaBroom className="text-4xl text-blue-600 mx-auto mb-4" />
+                <h4 className="font-semibold text-lg">Cleaning Services</h4>
+                <p className="mt-2 text-sm text-gray-600">
+                  Professional cleaning services at affordable prices.
+                </p>
               </div>
             </div>
-          </section>
-          {/* Services (simple list) */}
-          <section id="services" className="py-12 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-2xl font-bold text-gray-900">
-                Popular Services
-              </h2>
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="p-4 bg-white rounded-lg border border-gray-100">
-                  <h4 className="font-semibold">House Booking</h4>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Search listings, compare and book homes for short or long
-                    stays.
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border border-gray-100">
-                  <h4 className="font-semibold">Appliance Repair</h4>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Certified technicians for fast appliance fixes at your
-                    doorstep.
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border border-gray-100">
-                  <h4 className="font-semibold">Cleaning Services</h4>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Regular or deep cleaning options to keep your home spotless.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-          <UrbanFooter />
-        </main>
-      </div>
+          </div>
+        </section>
+
+        {/* CALL TO ACTION */}
+        <section className="py-16 bg-gradient-to-r from-blue-300 to-blue-800 text-white text-center">
+          <h2 className="text-3xl font-bold">
+            Ready to simplify your city life?
+          </h2>
+          <p className="mt-3 text-gray-200">
+            Join UrbanEase today and manage everything from one platform.
+          </p>
+          <a
+            href="/register"
+            className="inline-block mt-6 px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-gray-100 transition"
+          >
+            Create Account
+          </a>
+        </section>
+
+        {/* FOOTER */}
+        <UrbanFooter />
+      </main>
     </>
   );
 }

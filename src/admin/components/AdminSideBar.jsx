@@ -51,19 +51,19 @@ function AdminSideBar() {
             <SidebarItem href="/admin-providers" icon={HiShoppingBag}>
               Providers
             </SidebarItem>
-            <SidebarItem href="/admin-users" icon={HiInbox}>
+            <SidebarItem href="/admin-booking" icon={HiInbox}>
               Bookings
             </SidebarItem>
-            <SidebarItem icon={HiViewBoards}>
+            {/* <SidebarItem icon={HiViewBoards}>
               Settings
-            </SidebarItem>
+            </SidebarItem> */}
           </SidebarItemGroup>
           </div>
 
           {/* FOOTER MENU */}
           <SidebarItemGroup>
             <SidebarItem icon={BiBuoy}>
-              Help
+              Logout
             </SidebarItem>
           </SidebarItemGroup>
 
