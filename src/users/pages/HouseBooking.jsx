@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
@@ -10,10 +10,40 @@ import Details from "./Details";
 import { Carousel } from "flowbite-react";
 import { Pagination } from "flowbite-react";
 import { useState } from "react";
+import { GetHouseUserAPI } from "../../services/allAPI";
+import { serverURL } from "../../services/serverURL";
 
 
 
 function HouseBooking() {
+
+  //to hold token from local storgar
+  const [token,setToken] = useState('')
+
+  const[getHouseUser,setGetHouseUser] = useState([])
+
+  const getAllHouse = async(token)=>{
+    // const token = JSON.parse( sessionStorage.getItem("token") )
+    const updatedToken = token.replace(/"/g, "");
+    const reqHeader = {
+      Authorization: `Bearer ${updatedToken}`,
+    };
+    console.log(reqHeader);
+    try {
+      const response = await GetHouseUserAPI(reqHeader)
+      console.log(response);
+      setGetHouseUser(response.data)
+      
+    } catch (error) {
+      console.log("Error"+error);
+      
+    }
+  }
+
+  useEffect(()=>{
+    setToken(sessionStorage.getItem('token'))
+    getAllHouse(token)
+  },[token])
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -58,15 +88,18 @@ const onPageChange = (page) => setCurrentPage(page);
           {/* GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6">
             {/* CARD 1 */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
+            {
+              getHouseUser?.length>0?
+              getHouseUser.map((item)=>(
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
               <div className="h-56">
                  <div className="h-56 ">
                       <Carousel>
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+                        {item.uploadImage && item.uploadImage.length > 0 ? item.uploadImage.map(item=>( <img src={`${serverURL}/uploads/${item}`} alt="..." />)):
+                        <h3>No images</h3> }
+                       
+                        
+
                       </Carousel>
                     </div>
               </div>
@@ -75,22 +108,22 @@ const onPageChange = (page) => setCurrentPage(page);
                 {/* TOP ROW → Hostel Name (left) + Single Room Badge (right) */}
                 <div className="flex justify-between items-start">
                   <h3 className="text-lg font-bold">
-                    The Scholars' Hub Hostel
+                    {item.hostelName}
                   </h3>
                   <span className="px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
-                    Single Room
+                     {item.propertyType}
                   </span>
                 </div>
 
                 {/* LOCATION BELOW HOSTEL NAME */}
                 <p className="text-sm font-bold flex items-center gap-1 mt-1">
                   <IoLocationOutline className="text-gray-600" />
-                  Kakkanad
+                  {item.location}
                 </p>
 
                 {/* PRICE */}
                 <div className="flex items-center text-xl font-bold text-blue-600 mt-2">
-                  <span className="ml-2">₹5000</span>
+                  <span className="ml-2">₹{item.rent}</span>
                   <span className="text-sm ml-1 text-gray-500">/ Month</span>
                 </div>
 
@@ -103,149 +136,10 @@ const onPageChange = (page) => setCurrentPage(page);
 
               </div>
             </div>
+              )):
+              "No Houses Available"
+            }
 
-            {/* CARD 1 */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
-              <div className="h-56">
-                 <div className="h-56 ">
-                      <Carousel>
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
-                      </Carousel>
-                    </div>
-              </div>
-
-              <div className="p-4 flex flex-col flex-grow">
-                {/* TOP ROW → Hostel Name (left) + Single Room Badge (right) */}
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-bold">
-                    The Scholars' Hub Hostel
-                  </h3>
-                  <span className="px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
-                    Single Room
-                  </span>
-                </div>
-
-                {/* LOCATION BELOW HOSTEL NAME */}
-                <p className="text-sm font-bold flex items-center gap-1 mt-1">
-                  <IoLocationOutline className="text-gray-600" />
-                  Kakkanad
-                </p>
-
-                {/* PRICE */}
-                <div className="flex items-center text-xl font-bold text-blue-600 mt-2">
-                  <span className="ml-2">₹5000</span>
-                  <span className="text-sm ml-1 text-gray-500">/ Month</span>
-                </div>
-
-                {/* BUTTONS */}
-                <div className="flex gap-2 mt-auto pt-4">
-  <button className="flex-grow bg-blue-600 text-white py-1 rounded-lg flex items-center justify-center">
-    <Details />
-  </button>
-</div>
-
-              </div>
-            </div>
-
-            {/* CARD 1 */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
-              <div className="h-56">
-                 <div className="h-56 ">
-                      <Carousel>
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
-                      </Carousel>
-                    </div>
-              </div>
-
-              <div className="p-4 flex flex-col flex-grow">
-                {/* TOP ROW → Hostel Name (left) + Single Room Badge (right) */}
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-bold">
-                    The Scholars' Hub Hostel
-                  </h3>
-                  <span className="px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
-                    Single Room
-                  </span>
-                </div>
-
-                {/* LOCATION BELOW HOSTEL NAME */}
-                <p className="text-sm font-bold flex items-center gap-1 mt-1">
-                  <IoLocationOutline className="text-gray-600" />
-                  Kakkanad
-                </p>
-
-                {/* PRICE */}
-                <div className="flex items-center text-xl font-bold text-blue-600 mt-2">
-                  <span className="ml-2">₹5000</span>
-                  <span className="text-sm ml-1 text-gray-500">/ Month</span>
-                </div>
-
-                {/* BUTTONS */}
-                <div className="flex gap-2 mt-auto pt-4">
-  <button className="flex-grow bg-blue-600 text-white py-1 rounded-lg flex items-center justify-center">
-    <Details />
-  </button>
-</div>
-
-              </div>
-            </div>
-
-            {/* CARD 4 */}
-            
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
-              <div className="h-56">
-                 <div className="h-56 ">
-                      <Carousel>
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
-                      </Carousel>
-                    </div>
-              </div>
-
-              <div className="p-4 flex flex-col flex-grow">
-                {/* TOP ROW → Hostel Name (left) + Single Room Badge (right) */}
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-bold">
-                    The Scholars' Hub Hostel
-                  </h3>
-                  <span className="px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
-                    Single Room
-                  </span>
-                </div>
-
-                {/* LOCATION BELOW HOSTEL NAME */}
-                <p className="text-sm font-bold flex items-center gap-1 mt-1">
-                  <IoLocationOutline className="text-gray-600" />
-                  Kakkanad
-                </p>
-
-                {/* PRICE */}
-                <div className="flex items-center text-xl font-bold text-blue-600 mt-2">
-                  <span className="ml-2">₹5000</span>
-                  <span className="text-sm ml-1 text-gray-500">/ Month</span>
-                </div>
-
-                {/* BUTTONS */}
-                <div className="flex gap-2 mt-auto pt-4">
-  <button className="flex-grow bg-blue-600 text-white py-1 rounded-lg flex items-center justify-center">
-    <Details />
-  </button>
-</div>
-
-              </div>
-            </div>
-        
           </div>
               <div className="flex justify-center">
   <Pagination
@@ -268,6 +162,8 @@ const onPageChange = (page) => setCurrentPage(page);
           <UrbanFooter />
         </div>
       </div>
+
+      
     </div>
   );
 }

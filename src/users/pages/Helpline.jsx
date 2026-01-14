@@ -2,8 +2,36 @@ import React from "react";
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
 import UsersSidebar from "../components/UsersSidebar";
+import { useEffect, useState } from "react";
+import { GetHelpUserAPI } from "../../services/allAPI";
 
 function Helpline() {
+
+  const [token,setToken] = useState('')
+    
+      const [getHelp,setGetHelp]=useState([])
+  
+      const getHelper = async(token)=>{
+          const updatedToken = token.replace(/"/g, "");
+          const reqHeader = {
+            Authorization: `Bearer ${updatedToken}`,
+          };
+          console.log(reqHeader);
+          try {
+            const response = await GetHelpUserAPI(reqHeader)
+            console.log(response);
+            setGetHelp(response.data)
+            
+          } catch (error) {
+            console.log("Error"+error);
+          }
+        }
+      
+        useEffect(()=>{
+          setToken(sessionStorage.getItem('token'))
+          getHelper(token)
+        },[token])
+
   return (
     <>
       {/* FIXED NAVBAR */}
@@ -30,16 +58,19 @@ function Helpline() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Police Station */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
+            {
+              getHelp?.length>0?
+              getHelp.map((item)=>(
+                <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
               <div>
-                <h2 className="text-xl font-semibold">Police Station</h2>
+                <h2 className="text-xl font-semibold">{item.station}</h2>
 
                 <p className="text-gray-700 flex items-center gap-2">
-                  <b>Location:</b> Near Town Circle
+                  <b>Location:</b> {item.location}
                 </p>
 
                 <p className="text-gray-700 flex items-center gap-2">
-                  <b>Phone:</b> 100 / 9876543210
+                  <b>Phone:</b> {item.phonenumber}
                 </p>
               </div>
 
@@ -60,102 +91,14 @@ function Helpline() {
                 </a>
               </div>
             </div>
+              )):"No Nearby found"
+            }
 
-            {/* Railway Station */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Railway Station</h2>
+            
+              
+          
 
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Location:</b> Central Railway Station
-                </p>
-
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Phone:</b> 139 / 9123456780
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <a
-                  href="tel:139"
-                  className="bg-blue-800 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 text-center"
-                >
-                  Call Now
-                </a>
-
-                <a
-                  href="https://maps.google.com/?q=Railway+Station"
-                  target="_blank"
-                  className="bg-sky-500 text-white px-5 py-2.5 rounded-xl hover:bg-gray-800 text-center"
-                >
-                  Location
-                </a>
-              </div>
-            </div>
-
-            {/* Private Bus Stand */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Private Bus Stand</h2>
-
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Location:</b> Main City Private Bus Stand
-                </p>
-
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Phone:</b> 9876501234
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <a
-                  href="tel:9876501234"
-                  className="bg-blue-800 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 text-center"
-                >
-                  Call Now
-                </a>
-
-                <a
-                  href="https://maps.google.com/?q=Private+Bus+Stand"
-                  target="_blank"
-                  className="bg-sky-500 text-white px-5 py-2.5 rounded-xl hover:bg-gray-800 text-center"
-                >
-                  Location
-                </a>
-              </div>
-            </div>
-
-            {/* KSRTC Bus Stand */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">KSRTC Bus Stand</h2>
-
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Location:</b> KSRTC Depot, City Center
-                </p>
-
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Phone:</b> 0481-1234567
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <a
-                  href="tel:04811234567"
-                  className="bg-blue-800 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 text-center"
-                >
-                  Call Now
-                </a>
-
-                <a
-                  href="https://maps.google.com/?q=KSRTC+Bus+Stand"
-                  target="_blank"
-                  className="bg-sky-500 text-white px-5 py-2.5 rounded-xl hover:bg-gray-800 text-center"
-                >
-                  Location
-                </a>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

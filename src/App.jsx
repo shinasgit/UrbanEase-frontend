@@ -20,6 +20,9 @@ import AdminProfile from './admin/pages/AdminProfile'
 import Profile from './users/pages/Profile'
 import EditProf from './users/components/EditProf'
 import AdminBooking from './admin/pages/AdminBooking'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import Preloader from './components/Preloader'
 
 
 // import ConnectionPage from './users/pages/ConnectionPage'
@@ -28,11 +31,18 @@ import AdminBooking from './admin/pages/AdminBooking'
 
 
 function App() {
+  const [isloading,setIsloading]=useState(false)
   
+  useEffect(()=>{
+    setTimeout(()=>{
+      setIsloading(true)
+    },2000)
+  },[])
+
   return (
     <>
     <Routes>
-      <Route path={""} element={<Home/>}/>
+      <Route path={""} element={isloading?<Home/>:<Preloader/>}/>
       <Route path={"/housebook"} element={<HouseBooking/>}/>
       <Route path={"/appliancesbook"} element={<Appliances/>}/>
       <Route path={"/services"} element={<Services/>}/>

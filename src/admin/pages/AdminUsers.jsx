@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import AdminHeader from "../components/AdminHeader";
 import AdminSideBar from "../components/AdminSideBar";
 import { TabItem, Tabs } from "flowbite-react";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
+import { GetUserAdminAPI } from "../../services/allAPI";
+
 
 function AdminUsers() {
+
+  const [token,setToken] = useState("")
+   const [adminUser,setAdminUser] = useState([])
+
+   const getAdminUser = async()=>{
+    const token = JSON.parse( sessionStorage.getItem("token") )
+    // const updatedToken = token.replace(/"/g, "");
+    const reqHeader = {
+      Authorization: `Bearer ${token}`,
+    };
+    console.log(reqHeader);
+    try {
+      const response = await GetUserAdminAPI(reqHeader)
+      console.log(response);
+      setAdminUser(response?.data)
+      console.log(setAdminUser);
+    } catch (error) {
+      console.log("Error"+error);
+      
+    }
+   }
+
+   useEffect(()=>{
+    getAdminUser()
+   },[])
+
   return (
     <>
       <AdminHeader />
@@ -36,11 +64,14 @@ function AdminUsers() {
 
                   <tbody className="divide-y">
                     {/* Row 1 */}
-                    <tr className="text-gray-700">
-                      <td className="px-6 py-4 font-medium">1</td>
-                      <td className="px-6 py-4">Alice Johnson</td>
-                      <td className="px-6 py-4">alice@example.com</td>
-                      <td className="px-6 py-4">Customer</td>
+                    {
+                      adminUser?.length>0?
+                      adminUser.map((item)=>(
+                        <tr className="text-gray-700">
+                      <td className="px-6 py-4 font-medium">{item._id}</td>
+                      <td className="px-6 py-4">{item.username}</td>
+                      <td className="px-6 py-4">{item.email}</td>
+                      <td className="px-6 py-4">{item.role}</td>
 
                       <td className="px-6 py-4 space-x-4">
                         <span className="text-blue-600 cursor-pointer hover:underline">
@@ -51,40 +82,9 @@ function AdminUsers() {
                         </span>
                       </td>
                     </tr>
-
-                    {/* Row 2 */}
-                    <tr className="text-gray-700">
-                      <td className="px-6 py-4 font-medium">2</td>
-                      <td className="px-6 py-4">Bob Smith</td>
-                      <td className="px-6 py-4">bob@example.com</td>
-                      <td className="px-6 py-4">Customer</td>
-
-                      <td className="px-6 py-4 space-x-4">
-                        <span className="text-blue-600 cursor-pointer hover:underline">
-                          Edit
-                        </span>
-                        <span className="text-red-600 cursor-pointer hover:underline">
-                          Delete
-                        </span>
-                      </td>
-                    </tr>
-
-                    {/* Row 3 */}
-                    <tr className="text-gray-700">
-                      <td className="px-6 py-4 font-medium">3</td>
-                      <td className="px-6 py-4">Charlie Brown</td>
-                      <td className="px-6 py-4">charlie@example.com</td>
-                      <td className="px-6 py-4">Customer</td>
-
-                      <td className="px-6 py-4 space-x-4">
-                        <span className="text-blue-600 cursor-pointer hover:underline">
-                          Edit
-                        </span>
-                        <span className="text-red-600 cursor-pointer hover:underline">
-                          Delete
-                        </span>
-                      </td>
-                    </tr>
+                      )):
+                      "No Users Found"
+                    }
                   </tbody>
                 </table>
               </div>

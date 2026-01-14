@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
 import UsersSidebar from "../components/UsersSidebar";
 import { IoCallOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
+import { GetHelpUserAPI } from "../../services/allAPI";
+
+
 function Services() {
+
+  const [token,setToken] = useState('')
+  
+    const [getHelp,setGetHelp]=useState([])
+
+    const getHelper = async(token)=>{
+        const updatedToken = token.replace(/"/g, "");
+        const reqHeader = {
+          Authorization: `Bearer ${updatedToken}`,
+        };
+        console.log(reqHeader);
+        try {
+          const response = await GetHelpUserAPI(reqHeader)
+          console.log(response);
+          setGetHelp(response.data)
+          
+        } catch (error) {
+          console.log("Error"+error);
+        }
+      }
+    
+      useEffect(()=>{
+        setToken(sessionStorage.getItem('token'))
+        getHelper(token)
+      },[token])
+
   return (
     <>
       {/* FIXED NAVBAR */}
@@ -43,17 +72,20 @@ function Services() {
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
   {/* Helper 1 */}
-  <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
+  {
+    getHelp?.length>0?
+    getHelp.map((item)=>(
+      <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
     <div>
-      <h2 className="text-xl font-semibold">Plumber</h2>
+      <h2 className="text-xl font-semibold">{item.jobType}</h2>
       <p className="text-gray-700 flex items-center gap-2">
       <CiUser className="text-lg" />
-      <b>Name:</b> Ramesh Kumar
+      <b>Name:</b> {item.helpername}
     </p>
 
     <p className="text-gray-700 flex items-center gap-2">
       <IoCallOutline className="text-lg" />
-      <b>Phone:</b> 9876543210
+      <b>Phone:</b> {item.number}
     </p>
     </div>
 
@@ -61,52 +93,10 @@ function Services() {
       Call Now
     </button>
   </div>
+    )):"No Helpers Available"
+  }
 
-  {/* Helper 2 */}
-  <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-    <div>
-      <h2 className="text-xl font-semibold">Electrician</h2>
-      <p className="text-gray-700"><b>Name:</b> Akshay Kumar</p>
-      <p className="text-gray-700"><b>Phone:</b> 9123456780</p>
-    </div>
-
-    <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700">
-      Call Now
-    </button>
-  </div>
-
-  {/* Helper 3 */}
-  <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-    <div>
-      <h2 className="text-xl font-semibold">Car Mechanic</h2>
-      <p className="text-gray-700"><b>Name:</b> Salman Ali</p>
-      <p className="text-gray-700"><b>Phone:</b> 9090909090</p>
-    </div>
-
-    <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700">
-      Call Now
-    </button>
-  </div>
-
-  {/* Helper 4 */}
-  <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
-    <div>
-      <h2 className="text-xl font-semibold">Plumber</h2>
-      <p className="text-gray-700 flex items-center gap-2">
-      <CiUser className="text-lg" />
-      <b>Name:</b> Ramesh Kumar
-    </p>
-
-    <p className="text-gray-700 flex items-center gap-2">
-      <IoCallOutline className="text-lg" />
-      <b>Phone:</b> 9876543210
-    </p>
-    </div>
-
-    <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700">
-      Call Now
-    </button>
-  </div>
+  
 
 
 </div>

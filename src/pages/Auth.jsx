@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Button, Card, Label, TextInput } from "flowbite-react";
 import Hyperspeed from "./Hyperspeed";
 import { useNavigate } from "react-router-dom";
-import { loginUserAPI, registerUserAPI } from "../services/allAPI";
+import { GoogleloginUserAPI, loginUserAPI, registerUserAPI } from "../services/allAPI";
 import { ToastContainer, toast } from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
+import {jwtDecode} from 'jwt-decode'
 
 function Auth({ register }) {
   console.log(register);
@@ -49,13 +51,11 @@ function Auth({ register }) {
             theme: "light",
           });
 
-          
           setTimeout(() => {
             navigate("/login");
           }, 2000);
 
           setUserData({ username: "", email: "", password: "" });
-
         } else {
           toast.error("Registration Failed!", {
             position: "top-center",
@@ -96,6 +96,10 @@ function Auth({ register }) {
             "userDetails",
             JSON.stringify(response.data.user)
           );
+          sessionStorage.setItem(
+            "token",
+            JSON.stringify(response.data.token)
+          );
 
           toast.success("Login Successful", {
             position: "top-center",
@@ -108,24 +112,19 @@ function Auth({ register }) {
             theme: "light",
           });
 
-          if(response.data.user.role == "UEAdmin"){
+          if (response.data.user.role == "UEAdmin") {
             setTimeout(() => {
-            navigate("/admin-home");
-          }, 2000);
-          }
-          else if(response.data.user.role == "UEProvider"){
+              navigate("/admin-home");
+            }, 2000);
+          } else if (response.data.user.role == "UEProvider") {
             setTimeout(() => {
-            navigate("/homeSP");
-          }, 2000);
-          }
-          else{
+              navigate("/homeSP");
+            }, 2000);
+          } else {
             setTimeout(() => {
-            navigate("/housebook");
-          }, 2000);
+              navigate("/housebook");
+            }, 2000);
           }
-
-
-          
         } else {
           toast.error("Login Failed!", {
             position: "top-center",
@@ -143,6 +142,44 @@ function Auth({ register }) {
       }
     }
   };
+
+  const handleGoogleLogin = async(credentialResponse) => {
+    console.log("google login",credentialResponse);
+    const decode = jwtDecode(credentialResponse.credential)
+    console.log(decode);
+
+    const response = await GoogleloginUserAPI({email:decode.email,password:"googlepswd",username:decode.name,profile:decode.picture})
+    console.log(response);
+    
+    if(response.status == 200){
+      sessionStorage.setItem(
+            "userDetails",
+            JSON.stringify(response.data.user)
+          );
+          sessionStorage.setItem(
+            "token",
+            JSON.stringify(response.data.token)
+          );
+
+          toast.success("Login Successful", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          setTimeout(() => {
+              navigate("/housebook");
+            }, 2000);
+          
+          
+    }
+    
+  }
 
   return (
     <div className="min-h-screen bg-teal-50 flex items-center justify-center px-4">
@@ -235,21 +272,42 @@ function Auth({ register }) {
             <Button
               onClick={handleLogin}
               type="button"
-              className="bg-blue-800 hover:bg-blue-700"
-            >
+              className="bg-blue-800 hover:bg-blue-700">
               Login
             </Button>
           )}
-
           {/* Divider */}
           <div className="flex items-center gap-2">
             <div className="flex-1 h-px bg-gray-200"></div>
             <span className="text-xs text-gray-400">OR</span>
             <div className="flex-1 h-px bg-gray-200"></div>
           </div>
+          <GoogleLogin onClick={()=>handleGoogleLogin(credentialResponse)}
+            onSuccess={credentialResponse => {
+              console.log(credentialResponse);
+              handleGoogleLogin(credentialResponse)
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+
+          
+
+          
 
           {/* Register Link */}
           {register ? (
+             <><p className="text-center text-sm text-gray-600">
+              Register as a Service Provider?
+              <a
+                href="/login"
+                className="ml-1 text-blue-800 font-medium hover:underline"
+              >
+                Register
+              </a>
+            </p>
+            
             <p className="text-center text-sm text-gray-600">
               Already have an account?
               <a
@@ -258,7 +316,7 @@ function Auth({ register }) {
               >
                 Login
               </a>
-            </p>
+            </p></>
           ) : (
             <p className="text-center text-sm text-gray-600">
               Don’t have an account?

@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { CiChat1 } from "react-icons/ci";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { Button, Modal, ModalBody, ModalHeader, Card } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function AdminHeader() {
+
+  const [userData , setUserData]= useState({})
+  
+    console.log(userData);
+    const navigate = useNavigate()
+    
+    const logout = async()=>{
+      sessionStorage.clear()
+      navigate("/")
+    }
+  
+    let userDetails = JSON.parse(sessionStorage.getItem('userDetails'))
+    console.log(userDetails);
+    
+  
+  
+  
+    useEffect(()=>{
+      setUserData(userDetails)
+    },[])
+  
+
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -49,14 +73,14 @@ export default function AdminHeader() {
           >
             <div className="flex flex-col text-right mr-3">
               <span className="font-medium text-white text-sm">
-                Cora Richards
+                {userData.username}
               </span>
-              <span className="text-xs text-gray-300">cora.r@edu.com</span>
+              <span className="text-xs text-gray-300">{userData.email}</span>
             </div>
 
             <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
-                src="https://placehold.co/40x40/2563EB/FFFFFF?text=CR"
+                src={userData.profile}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -96,11 +120,14 @@ export default function AdminHeader() {
 
           {/* Buttons */}
           <div className="flex gap-3 mt-4 w-full justify-center">
+            <Link to={"/admin-profile"}>
             <Button className="bg-green-600 hover:bg-green-700 text-white focus:ring-0 px-6">
               Edit Profile
             </Button>
+            </Link>
+            
 
-            <Button className="bg-red-600 hover:bg-red-700 text-white focus:ring-0 px-6">
+            <Button onClick={logout} className="bg-red-600 hover:bg-red-700 text-white focus:ring-0 px-6">
               Logout
             </Button>
           </div>

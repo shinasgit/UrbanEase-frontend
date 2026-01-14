@@ -7,13 +7,26 @@ import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 import { Card, Dropdown, DropdownItem } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
 
+  //get user details
   const [userData , setUserData]= useState({})
+
+  console.log(userData);
+  
+
   let userDetails = JSON.parse(sessionStorage.getItem('userDetails'))
   console.log(userDetails);
   
+  const navigate= useNavigate()
+
+  const logOut = async()=>{
+    sessionStorage.clear()
+    navigate("/")
+  }
+
 
   useEffect(()=>{
     setUserData(userDetails)
@@ -21,10 +34,7 @@ export default function Header() {
 
   const [openModal, setOpenModal] = useState(false);
   return (
-    <header
-      className="bg-white fixed top-0 left-0 right-0 z-50 
-            w-[98%] mx-auto mt-3 shadow-lg rounded-2xl px-6 py-2 
-            flex items-center justify-between"
+    <header className="bg-white fixed top-0 left-0 right-0 z-50  w-[98%] mx-auto mt-3 shadow-lg rounded-2xl px-6 py-2 flex items-center justify-between"
     >
       {/* LEFT: Logo */}
       <div className="flex items-center gap-2">
@@ -80,16 +90,16 @@ export default function Header() {
           <Button className="focus:ring-0 focus:outline-none" onClick={() => setOpenModal(true)}>
             <div className="flex flex-col text-right mr-3">
               <span className="font-medium text-gray-800 text-sm">
-                {userData.name}
+                {userData.username}
               </span>
-              <span className="text-xs text-gray-500">shinasshoukath756@gamil.com</span>
+              <span className="text-xs text-gray-800">{userData.email}</span>
             </div>
 
             
 
             <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
-                src="https://placehold.co/40x40/F59E0B/FFFFFF?text=CR"
+                src={userData.profile}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -109,16 +119,16 @@ export default function Header() {
           alt="user"
           height="96"
           width="96"
-          src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
+          src={userData.profile}
           className="mb-3 rounded-full shadow-lg"
         />
 
         <h5 className="mb-1 text-xl font-medium text-gray-900">
-          Bonnie Green
+         {userData.username}
         </h5>
 
         <span className="text-sm text-gray-600">
-          Visual Designer
+          {userData.email}
         </span>
 
         <div className="mt-4 flex space-x-3 lg:mt-6">
@@ -130,10 +140,10 @@ export default function Header() {
           </a>
 
           <a
-            href="#"
+             onClick={logOut}
             className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100"
           >
-            Message
+           Logout
           </a>
         </div>
       </div>

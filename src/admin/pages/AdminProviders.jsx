@@ -6,6 +6,32 @@ import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 
 function AdminProviders() {
+
+  // const [token,setToken] = useState("")
+  //    const [adminProvider,setAdminProvider] = useState([])
+  
+  //    const getAdminUser = async()=>{
+  //     const token = JSON.parse( sessionStorage.getItem("token") )
+  //     // const updatedToken = token.replace(/"/g, "");
+  //     const reqHeader = {
+  //       Authorization: `Bearer ${token}`,
+  //     };
+  //     console.log(reqHeader);
+  //     try {
+  //       const response = await GetUserAdminAPI(reqHeader)
+  //       console.log(response);
+  //       setAdminUser(response?.data)
+  //       console.log(setAdminUser);
+  //     } catch (error) {
+  //       console.log("Error"+error);
+        
+  //     }
+  //    }
+  
+  //    useEffect(()=>{
+  //     getAdminUser()
+  //    },[])
+
   return (
     <>
     <AdminHeader />

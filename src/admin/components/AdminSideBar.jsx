@@ -10,62 +10,70 @@ import {
   HiInbox,
   HiShoppingBag,
   HiUser,
-  HiViewBoards,
 } from "react-icons/hi";
 import { BiBuoy } from "react-icons/bi";
+import { Link, useLocation } from "react-router-dom";
 
 function AdminSideBar() {
+  const { pathname } = useLocation();
+
+  const itemClass = (path) =>
+    pathname === path
+      ? "bg-blue-600 text-white rounded-lg transition-all"
+      : "text-gray-700 hover:bg-blue-100 rounded-lg transition-all";
+
   return (
-    <aside
-      className="
-        fixed 
-        top-23 
-        left-4
-        w-50 
-        h-[calc(100vh-7rem)]
-        bg-white 
-        rounded-3xl 
-        shadow-xl 
-        border border-gray-200
-      "
-    >
-      <Sidebar
-        aria-label="Admin Sidebar"
-        className="h-full bg-transparent rounded-none"
-      >
-        <SidebarItems className="flex flex-col justify-between h-full px-2">
-          
-          {/* MAIN MENU */}
+    <aside className="fixed top-24 left-4 w-56 h-[calc(100vh-7rem)] bg-white rounded-3xl shadow-xl border border-gray-200">
+      <Sidebar className="h-full bg-transparent">
+        <SidebarItems className="flex flex-col justify-between h-full px-3">
+
+          {/* MAIN */}
           <div>
-            {/* ADMIN PANEL TITLE */}
-            <h2 className="text-xl text-gray-50 px-3">
+            <h2 className="text-xl font-semibold text-gray-100 px-3 mb-6">
               Admin Panel
             </h2>
-          <SidebarItemGroup>
-            <SidebarItem icon={HiChartPie}>
-              Dashboard
-            </SidebarItem>
-            <SidebarItem href="/admin-users" icon={HiUser}>
-              Users
-            </SidebarItem>
-            <SidebarItem href="/admin-providers" icon={HiShoppingBag}>
-              Providers
-            </SidebarItem>
-            <SidebarItem href="/admin-booking" icon={HiInbox}>
-              Bookings
-            </SidebarItem>
-            {/* <SidebarItem icon={HiViewBoards}>
-              Settings
-            </SidebarItem> */}
-          </SidebarItemGroup>
+
+            <SidebarItemGroup>
+              <SidebarItem
+                as={Link}
+                to="/admin-home"
+                icon={HiChartPie}
+                className={itemClass("/admin-dashboard")}
+              >
+                Dashboard
+              </SidebarItem>
+
+              <SidebarItem
+                as={Link}
+                to="/admin-users"
+                icon={HiUser}
+                className={itemClass("/admin-users")}
+              >
+                Users
+              </SidebarItem>
+
+              <SidebarItem
+                as={Link}
+                to="/admin-providers"
+                icon={HiShoppingBag}
+                className={itemClass("/admin-providers")}
+              >
+                Providers
+              </SidebarItem>
+
+              <SidebarItem
+                as={Link}
+                to="/admin-booking"
+                icon={HiInbox}
+                className={itemClass("/admin-booking")}
+              >
+                Bookings
+              </SidebarItem>
+            </SidebarItemGroup>
           </div>
 
-          {/* FOOTER MENU */}
-          <SidebarItemGroup>
-            <SidebarItem icon={BiBuoy}>
-              Logout
-            </SidebarItem>
-          </SidebarItemGroup>
+          {/* FOOTER */}
+          
 
         </SidebarItems>
       </Sidebar>

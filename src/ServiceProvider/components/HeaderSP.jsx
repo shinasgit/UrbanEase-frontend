@@ -1,6 +1,7 @@
 import React from "react";
 import { CiChat1 } from "react-icons/ci";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { useEffect } from "react";
 
 import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { useState } from "react";
@@ -9,6 +10,22 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Card, Dropdown, DropdownItem } from "flowbite-react";
 
 export default function Header() {
+
+  const [userData , setUserData]= useState({})
+  
+    console.log(userData);
+    
+  
+    let userDetails = JSON.parse(sessionStorage.getItem('userDetails'))
+    console.log(userDetails);
+    
+  
+  
+  
+    useEffect(()=>{
+      setUserData(userDetails)
+    },[])
+
   const [openModal, setOpenModal] = useState(false);
   return (
     <header
@@ -64,14 +81,14 @@ export default function Header() {
           <Button className="focus:ring-0 focus:outline-none" onClick={() => setOpenModal(true)}>
             <div className="flex flex-col text-right mr-3">
               <span className="font-medium text-gray-800 text-sm">
-                Cora Richards
+                {userData.username}
               </span>
-              <span className="text-xs text-gray-500">cora.r@edu.com</span>
+              <span className="text-xs text-gray-500">{userData.email}</span>
             </div>
 
             <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
-                src="https://placehold.co/40x40/F59E0B/FFFFFF?text=CR"
+                src={userData.profile}
                 className="w-full h-full object-cover"
               />
             </div>

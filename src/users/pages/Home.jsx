@@ -2,8 +2,16 @@ import React from "react";
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
 import { FaHome, FaTools, FaBroom } from "react-icons/fa";
+import BlurText from "../../../React-bits/BlurText";
+// import GridScan from './GridScan';
+
 
 function Home() {
+
+  const handleAnimationComplete = () => {
+  console.log('Animation completed!');
+};
+
   return (
     <>
       {/* HEADER */}
@@ -12,17 +20,28 @@ function Home() {
       {/* MAIN CONTENT */}
       <main className="pt-24">
 
+        
+
         {/* HERO SECTION */}
         <section className="rounded  bg-gradient-to-r from-blue-300 to-blue-800 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <div className="flex justify-center items-center gap-3 mb-4">
               <img src="/logo.png" alt="logo" className="w-14 h-14" />
               <h1 className="text-4xl sm:text-5xl font-extrabold">
-                UrbanEase
+                <BlurText
+  text="Urban Ease"
+  delay={300}
+  animateBy="words"
+  direction="top"
+  onAnimationComplete={handleAnimationComplete}
+  className="text-5xl "
+/>
+                
               </h1>
             </div>
 
             <p className="text-xl sm:text-2xl font-semibold">
+              
               Find & Book Local Homes and Services
             </p>
 
@@ -114,20 +133,44 @@ function Home() {
         </section>
 
         {/* CALL TO ACTION */}
-        <section className="py-16 bg-gradient-to-r from-blue-300 to-blue-800 text-white text-center">
-          <h2 className="text-3xl font-bold">
-            Ready to simplify your city life?
-          </h2>
-          <p className="mt-3 text-gray-200">
-            Join UrbanEase today and manage everything from one platform.
-          </p>
-          <a
-            href="/register"
-            className="inline-block mt-6 px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-gray-100 transition"
-          >
-            Create Account
-          </a>
-        </section>
+        <section className="py-16 bg-gradient-to-r from-blue-300 to-blue-800">
+  <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    {/* USER SECTION */}
+    <div className="text-white text-center bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-lg">
+      <h2 className="text-3xl font-bold">
+        Join as a User
+      </h2>
+      <p className="mt-3 text-gray-200">
+        Find homes, appliances, helpers, and city services easily.
+      </p>
+      <a
+        href="/register"
+        className="inline-block mt-6 px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-gray-100 transition"
+      >
+        Create User Account
+      </a>
+    </div>
+
+    {/* SERVICE PROVIDER SECTION */}
+    <div className="text-white text-center bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-lg">
+      <h2 className="text-3xl font-bold">
+        Join as a Service Provider
+      </h2>
+      <p className="mt-3 text-gray-200">
+        List your services, reach customers, and grow your business.
+      </p>
+      <a
+        href="/register"
+        className="inline-block mt-6 px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-gray-100 transition"
+      >
+        Create Provider Account
+      </a>
+    </div>
+
+  </div>
+</section>
+
 
         {/* FOOTER */}
         <UrbanFooter />

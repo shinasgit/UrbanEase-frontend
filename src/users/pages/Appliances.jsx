@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Header from '../components/Header'
 import UrbanFooter from '../../components/UrbanFooter'
 import UsersSidebar from '../components/UsersSidebar'
+import { GetAppUserAPI } from "../../services/allAPI";
+
 
 function Appliances() {
+
+  const [token,setToken] = useState('')
+
+  const [getApp,setGetApp]=useState([])
+
+  const getAppliance = async(token)=>{
+    const updatedToken = token.replace(/"/g, "");
+    const reqHeader = {
+      Authorization: `Bearer ${updatedToken}`,
+    };
+    console.log(reqHeader);
+    try {
+      const response = await GetAppUserAPI(reqHeader)
+      console.log(response);
+      setGetApp(response.data)
+      
+    } catch (error) {
+      console.log("Error"+error);
+    }
+  }
+
+  useEffect(()=>{
+    setToken(sessionStorage.getItem('token'))
+    getAppliance(token)
+  },[token])
+
   return (
     <>
       {/* FIXED NAVBAR */}
@@ -27,20 +55,27 @@ function Appliances() {
           </div>
 
        {/* 📦 APPLIANCE HORIZONTAL CARDS */}
-<div className="space-y-6 mt-6">
+       
+
+       
+          <div className="space-y-6 mt-6">
 
   {/* Washing Machine */}
-  <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
+
+  {
+    getApp?.length>0?
+    getApp.map((item)=>(
+      <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
     {/* <img
       src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"
       alt="Washing Machine"
       className="w-20"/> */}
 
     <div className="flex-1">
-      <h2 className="text-xl font-bold text-gray-900">Washing Machine</h2>
-      <p className="text-gray-800">Brand:LG</p>
+      <h2 className="text-xl font-bold text-gray-900">Product:{item.product}</h2>
+      <p className="text-gray-800">Brand:{item.brand}</p>
       <p className="text-gray-600 mt-1">
-      Semi-Automatic 
+      {item.type}
       </p>
       <p className="text-blue-600 font-medium mt-1">Status: Available</p>
     </div>
@@ -49,74 +84,17 @@ function Appliances() {
       Book Now
     </button>
   </div>
+    )):"No Appliances Found"
+  }
+  
 
-  {/* wash 2  */}
-  <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    {/* <img
-      src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"
-      alt="Washing Machine"
-      className="w-20"
-    /> */}
+ 
 
-    <div className="flex-1">
-      <h2 className="text-xl font-bold text-gray-900">Washing Machine</h2>
-      <p className="text-gray-800">Brand:LG</p>
-      <p className="text-gray-600 mt-1">
-        Automatic
-      </p>
-      <p className="text-blue-600 font-medium mt-1">Status: Available</p>
-    </div>
-
-    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl">
-      Book Now
-    </button>
-  </div>
-
-  {/* Refrigerator */}
-  <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    {/* <img
-      src="https://cdn-icons-png.flaticon.com/512/1047/1047716.png"
-      alt="Refrigerator"
-      className="w-20"
-    /> */}
-
-    <div className="flex-1">
-      <h2 className="text-xl font-bold text-gray-900">Refrigerator</h2>
-      <p className="text-gray-800">Brand:LG</p>
-      <p className="text-gray-600 mt-1">
-        Single Door / Double Door / Mini-Fridge models.
-      </p>
-      <p className="text-green-600 font-medium mt-1">Status: Limited Stock</p>
-    </div>
-
-    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl">
-      Book Now
-    </button>
-  </div>
-
-  {/* Stove / Gas Cylinder */}
-  <div className="bg-white flex items-center gap-6 p-6 rounded-2xl border border-gray-200 shadow">
-    {/* <img
-      src=""
-      alt="Stove"
-      className="w-20"
-    /> */}
-
-    <div className="flex-1">
-      <h2 className="text-xl font-bold text-gray-900">Stove / Gas Cylinder</h2>
-      <p className="text-gray-600 mt-1">
-        Single Burner / Double Burner + Cylinder connection.
-      </p>
-      <p className="text-orange-600 font-medium mt-1">Status: Few Left</p>
-    </div>
-
-    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl">
-      Book Now
-    </button>
-  </div>
+ 
+  
 
 </div>
-
+        
 
       </div>
       </div>
