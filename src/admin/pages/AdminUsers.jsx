@@ -4,7 +4,7 @@ import AdminSideBar from "../components/AdminSideBar";
 import { TabItem, Tabs } from "flowbite-react";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { GetUserAdminAPI } from "../../services/allAPI";
+import { deleteUserAdminAPI, GetUserAdminAPI } from "../../services/allAPI";
 
 
 function AdminUsers() {
@@ -24,6 +24,24 @@ function AdminUsers() {
       console.log(response);
       setAdminUser(response?.data)
       console.log(setAdminUser);
+    } catch (error) {
+      console.log("Error"+error);
+      
+    }
+   }
+
+   const handleDelete = async(id)=>{
+    
+    try {
+      const token = JSON.parse( sessionStorage.getItem("token") )
+    // const updatedToken = token.replace(/"/g, "");
+    const reqHeader = {
+      Authorization: `Bearer ${token}`,
+    };
+    console.log(reqHeader);
+      const response = await deleteUserAdminAPI(id,reqHeader)
+      console.log(response);
+      alert(response.data.delUser.username+" is Deleted")
     } catch (error) {
       console.log("Error"+error);
       
@@ -74,12 +92,12 @@ function AdminUsers() {
                       <td className="px-6 py-4">{item.role}</td>
 
                       <td className="px-6 py-4 space-x-4">
-                        <span className="text-blue-600 cursor-pointer hover:underline">
+                        {/* <span className="text-blue-600 cursor-pointer hover:underline">
                           Edit
-                        </span>
-                        <span className="text-red-600 cursor-pointer hover:underline">
+                        </span> */}
+                        <button onClick={()=>handleDelete(item._id)} className="text-red-600 cursor-pointer hover:underline">
                           Delete
-                        </span>
+                        </button>
                       </td>
                     </tr>
                       )):

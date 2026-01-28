@@ -1,7 +1,21 @@
 import React from "react";
 import Header from "../components/Header";
+import {useEffect , useState } from "react";
 
 function Profile() {
+
+  const [userData , setUserData]= useState({})
+  
+    console.log(userData);
+    
+  
+    let userDetails = JSON.parse(sessionStorage.getItem('userDetails'))
+    console.log(userDetails);
+
+    useEffect(()=>{
+        setUserData(userDetails)
+      },[])
+
   return (
     <>
       <Header />
@@ -18,7 +32,7 @@ function Profile() {
         {/* Avatar */}
         <div className="flex flex-col items-center relative">
           <img
-            src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+            src={userData.profile}
             alt="profile"
             className="w-28 h-28 rounded-full shadow-lg"
           />
@@ -32,21 +46,21 @@ function Profile() {
           <div>
             <p className="text-sm font-semibold text-gray-600">Full Name</p>
             <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2 font-medium text-gray-700">
-              Shinas
+              {userData.username}
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <p className="text-sm font-semibold text-gray-600">User ID</p>
             <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2 text-sm text-gray-700 break-all">
-              6921bf914d7950b1e2304040
+              {userData.id}
             </div>
-          </div>
+          </div> */}
 
           <div>
             <p className="text-sm font-semibold text-gray-600">Email</p>
             <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2 text-sm text-gray-700">
-              shinasshoukath756@gmail.com
+              {userData.email}
             </div>
           </div>
 

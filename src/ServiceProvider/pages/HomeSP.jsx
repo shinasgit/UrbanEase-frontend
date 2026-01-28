@@ -24,6 +24,8 @@ function HomeSP() {
   const [preview, setPreview] = "";
   const [previewList, setPreviewList] = useState([]);
 
+  
+
   const [houseDetails, setHouseDetails] = useState({
     hostelName: "",
     location: "",

@@ -23,8 +23,8 @@ export const GetUserAdminAPI = async(reqHeader)=>{
 }
 
 //5 get house - user
-export const GetHouseUserAPI = async(reqHeader)=>{
-    return await commonAPI("GET",`${serverURL}/api/housebook`,{},reqHeader)
+export const GetHouseUserAPI = async(searchKey,reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/api/housebook?search=${searchKey}`,{},reqHeader)
 }
 
 //6 add house - SP
@@ -47,7 +47,17 @@ export const GetAppUserAPI = async(reqHeader)=>{
     return await commonAPI("GET",`${serverURL}/api/appliance`,{},reqHeader)
 }
 
-//9 get help - user
+//10 get help - user
 export const GetHelpUserAPI = async(reqHeader)=>{
     return await commonAPI("GET",`${serverURL}/api/helper`,{},reqHeader)
+}
+
+//11 delete user - admin
+export const deleteUserAdminAPI = async(id,reqHeader)=>{
+    return await commonAPI("DELETE",`${serverURL}/api/admin-user-delete/${id}`,{},reqHeader)
+}
+
+//12 update prof - admin
+export const updateProfAdminAPI = async(reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${serverURL}/api/adminprofile-edit`,{},reqBody,reqHeader)
 }

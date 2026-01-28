@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
-
+import React, { useContext, useEffect } from "react";
 import Header from "../components/Header";
 import UrbanFooter from "../../components/UrbanFooter";
 import UsersSidebar from "../components/UsersSidebar";
@@ -12,27 +11,37 @@ import { Pagination } from "flowbite-react";
 import { useState } from "react";
 import { GetHouseUserAPI } from "../../services/allAPI";
 import { serverURL } from "../../services/serverURL";
-
+import  { searchContext } from "../../contextShareAPI/ContextShare";
 
 
 function HouseBooking() {
 
-  //to hold token from local storgar
+  //to hold token from local storage
   const [token,setToken] = useState('')
 
-  const[getHouseUser,setGetHouseUser] = useState([])
+  const [getHouseUser,setGetHouseUser] = useState([])
 
-  const getAllHouse = async(token)=>{
-    // const token = JSON.parse( sessionStorage.getItem("token") )
-    const updatedToken = token.replace(/"/g, "");
-    const reqHeader = {
+  //filter
+  const [filterHouse,setFilterHouse] = useState([])
+
+  //search
+  
+  const {searchKey,setSearchKey} = useContext(searchContext)
+  console.log(searchKey);
+  
+
+  const getAllHouse = async(searchKey,token)=>{
+  // const token = JSON.parse( sessionStorage.getItem("token") )
+  const updatedToken = token.replace(/"/g, "");
+  const reqHeader = {
       Authorization: `Bearer ${updatedToken}`,
     };
     console.log(reqHeader);
     try {
-      const response = await GetHouseUserAPI(reqHeader)
+      const response = await GetHouseUserAPI(searchKey,reqHeader)
       console.log(response);
       setGetHouseUser(response.data)
+      setFilterHouse(response.data)
       
     } catch (error) {
       console.log("Error"+error);
@@ -40,10 +49,23 @@ function HouseBooking() {
     }
   }
 
+  const handleFilter = (location) =>{
+    console.log(location);
+    // filterHouse.location
+     if(location == "Reset"){
+      setGetHouseUser(filterHouse)
+     }else{
+    setGetHouseUser(filterHouse.filter(item=>(item.location).toLowerCase().trim()==location.toLowerCase().trim()))
+     }
+  }
+
+
   useEffect(()=>{
     setToken(sessionStorage.getItem('token'))
-    getAllHouse(token)
-  },[token])
+    if(token){
+      getAllHouse(searchKey,token)
+    }
+  },[searchKey,token])
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -71,19 +93,101 @@ const onPageChange = (page) => setCurrentPage(page);
           </div>
 
           {/* SEARCH + FILTER */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <div className="relative w-full sm:flex-grow">
-              <input
-                type="text"
-                placeholder="Search by name or location..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+         <div className="flex flex-col gap-4 mb-8">
+  {/* Search & Filter Button */}
+  
 
-            <button className="px-4 py-2 border rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center">
-              <span className="ml-2">Apply Filters</span>
-            </button>
+  {/* Filter Options (UI only) */}
+  <div className="mb-8">
+  {/* Search & Filter */}
+  <div className="flex flex-col sm:flex-row gap-4">
+    <input value={searchKey}
+      onChange={(e)=>setSearchKey(e.target.value)}
+      type="text" 
+      placeholder="Search by name or location..."
+      className="w-full pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+    />
+
+    {/* Hidden checkbox */}
+    <input type="checkbox" id="filterModal" className="hidden peer" />
+
+    {/* Open Modal Button */}
+    <label
+      htmlFor="filterModal"
+      className="cursor-pointer px-4 py-2 border rounded-lg bg-gray-100 hover:bg-gray-200"
+    >
+      Apply Filters
+    </label>
+
+    {/* Modal Overlay */}
+    <div className="fixed inset-0 bg-black/50 hidden peer-checked:flex items-center justify-center z-50">
+      {/* Modal Box */}
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+        <button className="text-xl font-semibold mb-4 text-gray-800">
+          Apply Filters
+        </button>
+
+        {/* Location */}
+        <div className="mb-4">
+          <h3 className="font-medium text-gray-700 mb-2">Location</h3>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2">
+              <input  onClick={()=>handleFilter("Kakkanad")} type="radio" name="location" />
+              Kakkanad
+            </label>
+            <label className="flex items-center gap-2">
+              <input  onClick={()=>handleFilter("Kaloor")} type="radio" name="location" />
+              Kaloor
+            </label>
+            <label className="flex items-center gap-2">
+              <input  onClick={()=>handleFilter("Palarivattom")} type="radio" name="location" />
+              Palarivattom
+            </label>
           </div>
+        </div>
+
+        {/* Property Type */}
+        <div className="mb-6">
+          <h3 className="font-medium text-gray-700 mb-2">Property Type</h3>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2">
+              <input type="radio" name="propertyType" />
+              Hostel
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="propertyType" />
+              House
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="propertyType" />
+              Flat
+            </label>
+          </div>
+        </div>
+
+        {/* Modal Actions */}
+        <div className="flex justify-end gap-3">
+          <label 
+            htmlFor="filterModal"  onClick={()=>handleFilter("Reset")}
+            className="cursor-pointer px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-800"
+          >
+            Reset
+          </label>
+
+          <label
+            htmlFor="filterModal"
+            className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Apply
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
 
           {/* GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6">
