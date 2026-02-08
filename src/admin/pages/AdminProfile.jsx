@@ -4,6 +4,9 @@ import AdminSideBar from "../components/AdminSideBar";
 import { updateProfAdminAPI } from "../../services/allAPI";
 
 export default function AdminProfile() {
+
+  const [updatedProf,setUpdatedProf] = useState(false)
+
   const [userData, setUserData] = useState({});
   console.log(userData);
 
@@ -20,6 +23,24 @@ export default function AdminProfile() {
   const [preview,setPreview] = useState('')
   const [token,setToken] = useState('')
 
+  useEffect(() => {
+    setUserData(userDetails);
+    setToken(sessionStorage.getItem('token'));
+    const User = JSON.parse(sessionStorage.getItem('userDetails'))
+    console.log(User);
+    
+    if(User){
+      setAdminDetails({
+        username:User.username,
+        password:User.password,
+        cpassword:User.password,
+        uploadProfile:User.uploadProfile
+      })
+      setUpdatedProf(true)
+    }
+  }, [updatedProf]);
+
+
   const uploadFile = async (e) => {
     setAdminDetails({ ...adminDetails, uploadProfile: e.target.files[0] });
     console.log(adminDetails.uploadProfile);
@@ -35,7 +56,7 @@ export default function AdminProfile() {
     console.log(adminDetails);
 
     // alert("Profile Updated Successfully");
-const updatedToken = token.replace(/"/g, "");
+    const updatedToken = token.replace(/"/g, "");
     const reqHeader = {
       Authorization: `Bearer ${updatedToken}`,
     };
@@ -51,6 +72,7 @@ const updatedToken = token.replace(/"/g, "");
     console.log(response);
     if(response.status == 200){
         alert(response.data.message)
+        // sessionStorage.setItem()
       }else{
         alert(response.message)
       }
@@ -59,13 +81,9 @@ const updatedToken = token.replace(/"/g, "");
       console.log("error"+error);
       
     }
-  };
+    };
 
-  useEffect(() => {
-    setUserData(userDetails);
-    setToken(sessionStorage.getItem('token'));
-  }, []);
-
+  
   return (
     <>
       <AdminHeader />
@@ -124,7 +142,7 @@ const updatedToken = token.replace(/"/g, "");
               {/* Full Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Full Name
+                  User Name
                 </label>
                 <input
                   onChange={(e) =>
@@ -134,7 +152,7 @@ const updatedToken = token.replace(/"/g, "");
                     })
                   }
                   type="text"
-                  value={adminDetails.username}
+                  value={adminDetails?.username}
                   placeholder="Enter full name"
                   className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -201,7 +219,7 @@ const updatedToken = token.replace(/"/g, "");
                 Cancel
               </button>
               <button
-                onClick={handleUpdate}
+                onClick={handleUpdate} type="button"
                 className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
               >
                 Save Changes

@@ -59,5 +59,20 @@ export const deleteUserAdminAPI = async(id,reqHeader)=>{
 
 //12 update prof - admin
 export const updateProfAdminAPI = async(reqBody,reqHeader)=>{
-    return await commonAPI("PUT",`${serverURL}/api/adminprofile-edit`,{},reqBody,reqHeader)
+    return await commonAPI("PUT",`${serverURL}/api/adminprofile-edit`,reqBody,reqHeader)
+}
+
+//13 get App - user
+export const GetModalViewUser = async(id,reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/api/modalView/${id}`,{},reqHeader)
+}
+
+//14 add booking - user
+export const addBookingAPI = async(reqBody,reqHeader )=>{
+    return await commonAPI('POST',`${serverURL}/api/booking`,reqBody,reqHeader)
+}
+
+//15 get Bookings - admin
+export const getBookingAdmin = async(reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/api/userbooking`,{},reqHeader)
 }

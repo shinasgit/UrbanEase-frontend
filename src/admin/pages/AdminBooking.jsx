@@ -1,8 +1,38 @@
 import React from "react";
 import AdminHeader from "../components/AdminHeader";
 import AdminSideBar from "../components/AdminSideBar";
+import { getBookingAdmin } from "../../services/allAPI";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function AdminBooking() {
+  const [getBooking, setGetBooking] = useState([]);
+  const [token, setToken] = useState("");
+
+  const getBookingData = async (token) => {
+    console.log(token);
+    const updatedToken = token.replace(/"/g,"")
+
+    const reqHeader = {
+      Authorization: `Bearer ${updatedToken}`,
+    };
+    console.log(reqHeader);
+    try {
+      const response = await getBookingAdmin(reqHeader)
+      console.log(response);
+      setGetBooking(response?.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //sewssion storsge nn get eyynel useeffect le kodknm
+  useEffect(() => {
+   setToken(sessionStorage.getItem("token"))
+    getBookingData(token);
+  }, [token]);
+
   return (
     <>
       <AdminHeader />
@@ -37,11 +67,12 @@ function AdminBooking() {
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="bg-gray-50 text-gray-700">
+                  <th className="px-4 py-3 text-left">User ID</th>
                   <th className="px-4 py-3 text-left">User</th>
-                  <th className="px-4 py-3 text-left">Service Type</th>
-                  <th className="px-4 py-3 text-left">Item</th>
-                  <th className="px-4 py-3 text-left">Date</th>
-                  <th className="px-4 py-3 text-left">Duration</th>
+                  <th className="px-4 py-3 text-left">Name</th>
+                  <th className="px-4 py-3 text-left">Type</th>
+                  {/* <th className="px-4 py-3 text-left">Date</th>
+                  <th className="px-4 py-3 text-left">Duration</th> */}
                   <th className="px-4 py-3 text-left">Status</th>
                   <th className="px-4 py-3 text-left">Action</th>
                 </tr>
@@ -49,12 +80,16 @@ function AdminBooking() {
 
               <tbody className="divide-y">
                 {/* ROW 1 */}
-                <tr>
-                  <td className="px-4 py-3 font-medium text-gray-800">Fahad</td>
-                  <td className="px-4 py-3">House</td>
-                  <td className="px-4 py-3">2BHK Apartment</td>
-                  <td className="px-4 py-3">12/03/2025</td>
-                  <td className="px-4 py-3">6 Months</td>
+                {
+                  getBooking?.length>0?
+                  getBooking.map((item)=>(
+                    <tr>
+                  <td className="px-4 py-3">{item.userID}</td>
+                  <td className="px-4 py-3 font-medium text-gray-800">{item.username}</td>
+                  <td className="px-4 py-3">{item.name}</td>
+                  <td className="px-4 py-3">{item.type}</td>
+                  {/* <td className="px-4 py-3">12/03/2025</td>
+                  <td className="px-4 py-3">6 Months</td> */}
                   <td className="px-4 py-3">
                     <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">
                       Pending
@@ -66,46 +101,13 @@ function AdminBooking() {
                     </button>
                   </td>
                 </tr>
+                  ))
+                  :
+                "No Bookings Yet"
+                }
 
-                {/* ROW 2 */}
-                <tr>
-                  <td className="px-4 py-3 font-medium text-gray-800">
-                    Shinas
-                  </td>
-                  <td className="px-4 py-3">Appliance</td>
-                  <td className="px-4 py-3">Washing Machine</td>
-                  <td className="px-4 py-3">15/03/2025</td>
-                  <td className="px-4 py-3">3 Months</td>
-                  <td className="px-4 py-3">
-                    <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">
-                      Approved
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <button className="text-blue-600 hover:underline text-sm">
-                      View
-                    </button>
-                  </td>
-                </tr>
-
-                {/* ROW 3 */}
-                <tr>
-                  <td className="px-4 py-3 font-medium text-gray-800">Ameen</td>
-                  <td className="px-4 py-3">House</td>
-                  <td className="px-4 py-3">PG Room</td>
-                  <td className="px-4 py-3">18/03/2025</td>
-                  <td className="px-4 py-3">1 Month</td>
-                  <td className="px-4 py-3">
-                    <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs">
-                      Rejected
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <button className="text-blue-600 hover:underline text-sm">
-                      View
-                    </button>
-                  </td>
-                </tr>
+                
+                
               </tbody>
             </table>
           </div>

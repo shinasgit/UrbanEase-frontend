@@ -234,7 +234,7 @@ const onPageChange = (page) => setCurrentPage(page);
                 {/* BUTTONS */}
                 <div className="flex gap-2 mt-auto pt-4">
   <button className="flex-grow bg-blue-600 text-white py-1 rounded-lg flex items-center justify-center">
-    <Details />
+    <Details id={item?._id} />
   </button>
 </div>
 
