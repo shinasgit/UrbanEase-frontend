@@ -19,11 +19,11 @@ function AdminSideBar() {
 
   const itemClass = (path) =>
     pathname === path
-      ? "bg-blue-600 text-white rounded-lg transition-all"
-      : "text-gray-700 hover:bg-blue-100 rounded-lg transition-all";
+      ? "bg-[#5BA4D4] text-white rounded-lg transition-all shadow-md"
+      : "ue-sidebar-btn text-gray-700 hover:bg-gray-100 rounded-lg transition-all";
 
   return (
-    <aside className="fixed top-24 left-4 w-56 h-[calc(100vh-7rem)] bg-white rounded-3xl shadow-xl border border-gray-200">
+    <aside className="ue-admin-sidebar fixed top-24 left-4 w-56 h-[calc(100vh-7rem)] bg-white rounded-3xl shadow-xl border border-gray-200 transition-colors duration-300">
       <Sidebar className="h-full bg-transparent">
         <SidebarItems className="flex flex-col justify-between h-full px-3">
 
@@ -38,7 +38,7 @@ function AdminSideBar() {
                 as={Link}
                 to="/admin-home"
                 icon={HiChartPie}
-                className={itemClass("/admin-dashboard")}
+                className={itemClass("/admin-home")}
               >
                 Dashboard
               </SidebarItem>

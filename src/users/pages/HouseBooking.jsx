@@ -5,6 +5,7 @@ import UrbanFooter from "../../components/UrbanFooter";
 import UsersSidebar from "../components/UsersSidebar";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
+import { FiFilter } from "react-icons/fi";
 import Details from "./Details";
 import { Carousel } from "flowbite-react";
 import { Pagination } from "flowbite-react";
@@ -49,15 +50,25 @@ function HouseBooking() {
     }
   }
 
-  const handleFilter = (location) =>{
-    console.log(location);
-    // filterHouse.location
-     if(location == "Reset"){
-      setGetHouseUser(filterHouse)
-     }else{
-    setGetHouseUser(filterHouse.filter(item=>(item.location).toLowerCase().trim()==location.toLowerCase().trim()))
-     }
-  }
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedProperty, setSelectedProperty] = useState("");
+
+  const handleApplyFilter = () => {
+    let filtered = [...filterHouse];
+    if (selectedLocation) {
+      filtered = filtered.filter(item => item.location?.toLowerCase().trim() === selectedLocation.toLowerCase().trim());
+    }
+    if (selectedProperty) {
+      filtered = filtered.filter(item => item.propertyType?.toLowerCase().trim() === selectedProperty.toLowerCase().trim());
+    }
+    setGetHouseUser(filtered);
+  };
+
+  const handleResetFilter = () => {
+    setSelectedLocation("");
+    setSelectedProperty("");
+    setGetHouseUser(filterHouse);
+  };
 
 
   useEffect(()=>{
@@ -79,15 +90,15 @@ const onPageChange = (page) => setCurrentPage(page);
       <UsersSidebar />
 
       {/* CONTENT AREA */}
-      <div className="pt-24 pl-[260px] pr-6 pb-10 bg-gray-50 min-h-screen">
+      <div className="ue-bg-page pt-24 pl-[260px] pr-6 pb-10 bg-gray-50 min-h-screen transition-colors duration-300">
         {/* PAGE WRAPPER */}
-        <div className="p-6 md:p-8 rounded-3xl shadow-xl border bg-white border-gray-100">
+        <div className="ue-bg-surface ue-border p-6 md:p-8 rounded-3xl shadow-xl border bg-white border-gray-100 transition-colors duration-300">
           {/* HEADER */}
           <div className="mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-800">
+            <h1 className="ue-text-primary text-3xl font-extrabold text-gray-800">
               Find Housing
             </h1>
-            <p className="text-gray-500 mt-1">
+            <p className="ue-text-muted text-gray-500 mt-1">
               Explore verified hostels and apartments near your university.
             </p>
           </div>
@@ -105,7 +116,7 @@ const onPageChange = (page) => setCurrentPage(page);
       onChange={(e)=>setSearchKey(e.target.value)}
       type="text" 
       placeholder="Search by name or location..."
-      className="w-full pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      className="w-full pl-4 pr-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-[#0D1F33] dark:text-gray-100 bg-white text-gray-900 placeholder-gray-500 rounded-lg focus:ring-2 focus:ring-[#5BA4D4]"
     />
 
     {/* Hidden checkbox */}
@@ -114,33 +125,34 @@ const onPageChange = (page) => setCurrentPage(page);
     {/* Open Modal Button */}
     <label
       htmlFor="filterModal"
-      className="cursor-pointer px-4 py-2 border rounded-lg bg-gray-100 hover:bg-gray-200"
+      className="cursor-pointer px-5 py-3 flex items-center justify-center border dark:border-gray-600 rounded-lg bg-gray-100 text-gray-800 dark:bg-[#1B3A5C] hover:bg-gray-200 dark:hover:bg-[#2A4B70] dark:text-gray-100 transition-colors"
+      title="Apply Filters"
     >
-      Apply Filters
+      <FiFilter className="text-xl" />
     </label>
 
     {/* Modal Overlay */}
     <div className="fixed inset-0 bg-black/50 hidden peer-checked:flex items-center justify-center z-50">
       {/* Modal Box */}
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-        <button className="text-xl font-semibold mb-4 text-gray-800">
+      <div className="bg-white dark:bg-[#1B3A5C] rounded-xl shadow-xl w-full max-w-md p-6 transition-colors duration-300 border dark:border-gray-700">
+        <div className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
           Apply Filters
-        </button>
+        </div>
 
         {/* Location */}
         <div className="mb-4">
-          <h3 className="font-medium text-gray-700 mb-2">Location</h3>
-          <div className="space-y-2">
-            <label className="flex items-center gap-2">
-              <input  onClick={()=>handleFilter("Kakkanad")} type="radio" name="location" />
+          <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Location</h3>
+          <div className="space-y-2 text-gray-700 dark:text-gray-300">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedLocation(e.target.value)} checked={selectedLocation === "Kakkanad"} value="Kakkanad" type="radio" name="location" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               Kakkanad
             </label>
-            <label className="flex items-center gap-2">
-              <input  onClick={()=>handleFilter("Kaloor")} type="radio" name="location" />
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedLocation(e.target.value)} checked={selectedLocation === "Kaloor"} value="Kaloor" type="radio" name="location" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               Kaloor
             </label>
-            <label className="flex items-center gap-2">
-              <input  onClick={()=>handleFilter("Palarivattom")} type="radio" name="location" />
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedLocation(e.target.value)} checked={selectedLocation === "Palarivattom"} value="Palarivattom" type="radio" name="location" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               Palarivattom
             </label>
           </div>
@@ -148,35 +160,35 @@ const onPageChange = (page) => setCurrentPage(page);
 
         {/* Property Type */}
         <div className="mb-6">
-          <h3 className="font-medium text-gray-700 mb-2">Property Type</h3>
-          <div className="space-y-2">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="propertyType" />
+          <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Property Type</h3>
+          <div className="space-y-2 text-gray-700 dark:text-gray-300">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedProperty(e.target.value)} checked={selectedProperty === "Hostel"} value="Hostel" type="radio" name="propertyType" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               Hostel
             </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="propertyType" />
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedProperty(e.target.value)} checked={selectedProperty === "House"} value="House" type="radio" name="propertyType" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               House
             </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="propertyType" />
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input onChange={(e)=>setSelectedProperty(e.target.value)} checked={selectedProperty === "Flat"} value="Flat" type="radio" name="propertyType" className="accent-[#5BA4D4] w-4 h-4 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
               Flat
             </label>
           </div>
         </div>
 
         {/* Modal Actions */}
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-3 mt-4 border-t dark:border-gray-700 pt-4">
           <label 
-            htmlFor="filterModal"  onClick={()=>handleFilter("Reset")}
-            className="cursor-pointer px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-800"
+            htmlFor="filterModal" onClick={handleResetFilter}
+            className="cursor-pointer px-4 py-2 border dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2A4B70] transition-colors"
           >
             Reset
           </label>
 
           <label
-            htmlFor="filterModal"
-            className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            htmlFor="filterModal" onClick={handleApplyFilter}
+            className="cursor-pointer px-4 py-2 bg-[#5BA4D4] text-white rounded-lg hover:bg-[#4a90c0] transition-colors shadow-sm"
           >
             Apply
           </label>
@@ -195,12 +207,12 @@ const onPageChange = (page) => setCurrentPage(page);
             {
               getHouseUser?.length>0?
               getHouseUser.map((item)=>(
-                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col">
+                <div className="ue-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col transition-colors duration-300">
               <div className="h-56">
                  <div className="h-56 ">
                       <Carousel>
                         {item.uploadImage && item.uploadImage.length > 0 ? item.uploadImage.map(item=>( <img src={`${serverURL}/uploads/${item}`} alt="..." />)):
-                        <h3>No images</h3> }
+                        <h3 className="text-[#5BA4D4] flex items-center justify-center h-full">No images uploaded</h3> }
                        
                         
 
@@ -210,14 +222,14 @@ const onPageChange = (page) => setCurrentPage(page);
 
               <div className="p-4 flex flex-col flex-grow">
                 {/* TOP ROW → Hostel Name (left) + Single Room Badge (right) */}
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-bold">
-                    {item.hostelName}
-                  </h3>
-                  <span className="px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
-                     {item.propertyType}
-                  </span>
-                </div>
+                  <div className="flex justify-between items-start">
+                    <h3 className="ue-text-primary text-lg font-bold">
+                      {item.hostelName}
+                    </h3>
+                    <span className="ue-badge px-2 py-1 text-xs bg-gray-100 rounded-lg whitespace-nowrap">
+                       {item.propertyType}
+                    </span>
+                  </div>
 
                 {/* LOCATION BELOW HOSTEL NAME */}
                 <p className="text-sm font-bold flex items-center gap-1 mt-1">
@@ -226,17 +238,15 @@ const onPageChange = (page) => setCurrentPage(page);
                 </p>
 
                 {/* PRICE */}
-                <div className="flex items-center text-xl font-bold text-blue-600 mt-2">
+                <div className="flex items-center text-xl font-bold text-[#5BA4D4] mt-2">
                   <span className="ml-2">₹{item.rent}</span>
                   <span className="text-sm ml-1 text-gray-500">/ Month</span>
                 </div>
 
                 {/* BUTTONS */}
-                <div className="flex gap-2 mt-auto pt-4">
-  <button className="flex-grow bg-blue-600 text-white py-1 rounded-lg flex items-center justify-center">
-    <Details id={item?._id} />
-  </button>
-</div>
+                <div className="flex mt-auto pt-4 w-full">
+                  <Details id={item?._id} />
+                </div>
 
               </div>
             </div>
@@ -251,12 +261,13 @@ const onPageChange = (page) => setCurrentPage(page);
     totalPages={100}
     onPageChange={onPageChange}
     className="
-      [&_button]:bg-blue-600
-      [&_button]:text-white
-      [&_button]:border-blue-800
-      [&_button:hover]:bg-blue-900
-      [&_button[aria-current='page']]:bg-blue-900
-      [&_button[aria-current='page']]:text-white
+      [&_button]:bg-white dark:[&_button]:bg-[#1B3A5C]
+      [&_button]:text-gray-700 dark:[&_button]:text-gray-200
+      [&_button]:border-gray-200 dark:[&_button]:border-gray-600
+      [&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-[#2A4B70]
+      [&_button[aria-current='page']]:bg-[#5BA4D4] dark:[&_button[aria-current='page']]:bg-[#5BA4D4]
+      [&_button[aria-current='page']]:text-white dark:[&_button[aria-current='page']]:text-white
+      [&_button[aria-current='page']]:border-[#5BA4D4] dark:[&_button[aria-current='page']]:border-[#5BA4D4]
     "
   />
 </div>

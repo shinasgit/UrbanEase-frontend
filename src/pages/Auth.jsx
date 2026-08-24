@@ -215,7 +215,8 @@ function Auth({ register }) {
                 type="text"
                 placeholder="Enter Your Username"
                 required
-                style={{ color: "black" }}
+                className="!bg-white !text-gray-900 !border-gray-300 !placeholder-gray-400"
+                style={{ color: "black", backgroundColor: "white" }}
               />
             </div>
           )}
@@ -231,7 +232,8 @@ function Auth({ register }) {
               type="email"
               placeholder="Enter Your E-mail"
               required
-              style={{ color: "black" }}
+              className="!bg-white !text-gray-900 !border-gray-300 !placeholder-gray-400"
+              style={{ color: "black", backgroundColor: "white" }}
             />
           </div>
 
@@ -246,7 +248,8 @@ function Auth({ register }) {
               type="password"
               required
               placeholder="Enter Your Password"
-              style={{ color: "black" }}
+              className="!bg-white !text-gray-900 !border-gray-300 !placeholder-gray-400"
+              style={{ color: "black", backgroundColor: "white" }}
             />
           </div>
 

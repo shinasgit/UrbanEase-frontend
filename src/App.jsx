@@ -23,6 +23,9 @@ import AdminBooking from './admin/pages/AdminBooking'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import Preloader from './components/Preloader'
+import Chatbot from './components/Chatbot'
+import CommunityMarketplace from './users/pages/CommunityMarketplace'
+import VehicleRentals from './users/pages/VehicleRentals'
 
 
 // import ConnectionPage from './users/pages/ConnectionPage'
@@ -54,6 +57,8 @@ function App() {
       <Route path={"/payment-success"} element={<PaymentSuccess/>}/>
       <Route path={"/payment-error"} element={<PaymentError/>}/>
       <Route path={"/editprof"} element={<EditProf/>}/>
+      <Route path={"/community-marketplace"} element={<CommunityMarketplace/>}/>
+      <Route path={"/vehicle-rentals"} element={<VehicleRentals/>}/>
       {/* <Route path={"/ConnectionPage"} element={<ConnectionPage/>}/> */}
 
       {/* servise provider module 2 */}
@@ -69,6 +74,7 @@ function App() {
 
       
     </Routes>
+    <Chatbot />
     </>
   )
 }

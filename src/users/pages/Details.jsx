@@ -97,9 +97,9 @@ function Details({id}) {
 
   const [openModal, setOpenModal] = useState(false);
   return (
-    <div>
+    <div className="w-full">
       <Button
-        className="focus:ring-0 focus:outline-none"
+        className="focus:ring-0 focus:outline-none bg-[#5BA4D4] enabled:hover:bg-[#4a90c0] w-full shadow-md"
         onClick={() => {setOpenModal(true);{handleModal(id)}}}
       >
         View Details
@@ -111,7 +111,7 @@ function Details({id}) {
         show={openModal}
         onClose={() => setOpenModal(false)}
       >
-        <ModalHeader>Terms of Service</ModalHeader>
+        <ModalHeader>Property Details</ModalHeader>
         
           
           
@@ -133,38 +133,38 @@ function Details({id}) {
 
                   {/* Hostel Details Section */}
                   <div className="space-y-3">
-                    <h2 className="text-xl font-bold">{modalData?.hostelName}</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">{modalData?.hostelName}</h2>
 
-                    <p className="text-gray-600">
-                      <strong> Location:</strong> {modalData?.location}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Location:</strong> {modalData?.location}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Rent:</strong> ₹{modalData?.rent} / Month
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Rent:</strong> ₹{modalData?.rent} / Month
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Deposit:</strong> ₹{modalData?.deposit}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Deposit:</strong> ₹{modalData?.deposit}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Property Type:</strong> {modalData?.propertyType}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Property Type:</strong> {modalData?.propertyType}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Nearby Metro:</strong> {modalData?.metro}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Nearby Metro:</strong> {modalData?.metro}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong>Nearby Bus Stop:</strong> {modalData?.busStop}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100">Nearby Bus Stop:</strong> {modalData?.busStop}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Tenant Information:</strong> {modalData?.vacancy}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Tenant Information:</strong> {modalData?.vacancy}
                     </p>
 
-                    <p className="text-gray-600">
-                      <strong> Furnishing Type:</strong> {modalData?.furnishing}
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <strong className="text-gray-900 dark:text-gray-100"> Furnishing Type:</strong> {modalData?.furnishing}
                     </p>
                   </div>
                 </div>
@@ -174,10 +174,10 @@ function Details({id}) {
         
 
         <ModalFooter>
-          <Button color="green" onClick={() => setOpenModal(false)}>
+          <Button color="gray" onClick={() => setOpenModal(false)}>
             Back
           </Button>
-          <Button color="blue" onClick={() => handleBooking(id,modalData.hostelName,modalData.propertyType,token)}>
+          <Button className="bg-[#5BA4D4] enabled:hover:bg-[#4a90c0] focus:ring-[#5BA4D4]" onClick={() => handleBooking(id,modalData.hostelName,modalData.propertyType,token)}>
             Book A Visit
           </Button>
         </ModalFooter>

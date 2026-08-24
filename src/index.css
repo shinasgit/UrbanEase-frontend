@@ -1,9 +1,107 @@
-
-*{
-  /* font-family: "Tinos", serif; */
-  font-family: "Figtree", sans-serif;
-}
-
 @import "flowbite";
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── UrbanEase Color Theme (from Logo) ─────────────────
+   Sky Blue  : #5BA4D4  (house in logo)
+   Navy Blue : #1B3A5C  (buildings in logo)
+   Dark BG   : #0D1F33  (deep navy for dark mode bg)
+──────────────────────────────────────────────────────── */
+
+:root {
+  --ue-sky: #5BA4D4;
+  --ue-navy: #1B3A5C;
+  --ue-dark-bg: #0D1F33;
+  --ue-dark-surface: #122540;
+  --ue-dark-card: #1B3A5C;
+  --ue-dark-border: #2a5080;
+  --ue-dark-text: #e2eaf3;
+  --ue-dark-muted: #8aaecb;
+}
+
+* {
+  font-family: "Figtree", sans-serif;
+}
+
+/* ─── Dark Mode Global Styles ─── */
+.dark body {
+  background-color: var(--ue-dark-bg);
+  color: var(--ue-dark-text);
+}
+
+/* Backgrounds */
+.dark .ue-bg-page       { background-color: var(--ue-dark-bg) !important; }
+.dark .ue-bg-surface    { background-color: var(--ue-dark-surface) !important; }
+.dark .ue-bg-card       { background-color: var(--ue-dark-card) !important; }
+
+/* Text */
+.dark .ue-text-primary  { color: var(--ue-dark-text) !important; }
+.dark .ue-text-muted    { color: var(--ue-dark-muted) !important; }
+.dark .ue-text-accent   { color: var(--ue-sky) !important; }
+
+/* Borders */
+.dark .ue-border        { border-color: var(--ue-dark-border) !important; }
+
+/* Sidebar */
+.dark .ue-sidebar {
+  background-color: var(--ue-dark-surface) !important;
+  border-color: var(--ue-dark-border) !important;
+}
+.dark .ue-sidebar-btn {
+  color: var(--ue-dark-muted) !important;
+}
+.dark .ue-sidebar-btn:hover {
+  background-color: var(--ue-navy) !important;
+  color: white !important;
+}
+
+/* Header */
+.dark .ue-header {
+  background-color: var(--ue-dark-surface) !important;
+  box-shadow: 0 2px 12px rgba(91, 164, 212, 0.12) !important;
+}
+
+/* Cards */
+.dark .ue-card {
+  background-color: var(--ue-dark-card) !important;
+  border-color: var(--ue-dark-border) !important;
+  color: var(--ue-dark-text) !important;
+}
+
+/* Input fields */
+.dark .ue-input {
+  background-color: var(--ue-dark-surface) !important;
+  border-color: var(--ue-dark-border) !important;
+  color: var(--ue-dark-text) !important;
+}
+.dark .ue-input::placeholder {
+  color: var(--ue-dark-muted) !important;
+}
+
+/* Section alternating backgrounds */
+.dark .ue-section-alt {
+  background-color: var(--ue-dark-surface) !important;
+}
+.dark .ue-section-white {
+  background-color: var(--ue-dark-bg) !important;
+}
+
+/* Footer */
+.dark .ue-footer {
+  background-color: var(--ue-dark-surface) !important;
+  border-color: var(--ue-dark-border) !important;
+  color: var(--ue-dark-muted) !important;
+}
+
+/* Badge/tag */
+.dark .ue-badge {
+  background-color: var(--ue-navy) !important;
+  color: var(--ue-sky) !important;
+}
+
+/* Admin sidebar */
+.dark .ue-admin-sidebar {
+  background-color: var(--ue-dark-surface) !important;
+  border-color: var(--ue-dark-border) !important;
+}

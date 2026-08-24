@@ -41,15 +41,15 @@ function Helpline() {
       <UsersSidebar />
 
       {/* CONTENT AREA */}
-      <div className="pt-24 pl-[260px] pr-6 pb-10 bg-gray-50 min-h-screen">
+      <div className="ue-bg-page pt-24 pl-[260px] pr-6 pb-10 bg-gray-50 min-h-screen transition-colors duration-300">
         {/* PAGE WRAPPER */}
-        <div className="p-6 md:p-8 rounded-3xl shadow-xl border bg-white border-gray-100">
+        <div className="ue-bg-surface ue-border p-6 md:p-8 rounded-3xl shadow-xl border bg-white border-gray-100 transition-colors duration-300">
           
           <div className="mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-800">
+            <h1 className="ue-text-primary text-3xl font-extrabold text-gray-800">
               Local Helpline Contacts
             </h1>
-            <p className="text-gray-500 mt-1">
+            <p className="ue-text-muted text-gray-500 mt-1">
               Easily access essential local services including police, railway
               station, private bus stand, and KSRTC bus stand for quick
               assistance anytime.
@@ -61,23 +61,23 @@ function Helpline() {
             {
               getHelp?.length>0?
               getHelp.map((item)=>(
-                <div className="bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center">
+                <div className="ue-card bg-white rounded-2xl border border-gray-200 shadow p-6 flex justify-between items-center transition-colors duration-300">
               <div>
-                <h2 className="text-xl font-semibold">{item.station}</h2>
+                <h2 className="ue-text-primary text-xl font-semibold">{item.station}</h2>
 
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Location:</b> {item.location}
+                <p className="ue-text-muted text-gray-700 flex items-center gap-2">
+                  <b className="ue-text-primary">Location:</b> {item.location}
                 </p>
 
-                <p className="text-gray-700 flex items-center gap-2">
-                  <b>Phone:</b> {item.phonenumber}
+                <p className="ue-text-muted text-gray-700 flex items-center gap-2 mt-1">
+                  <b className="ue-text-primary">Phone:</b> {item.phonenumber}
                 </p>
               </div>
 
               <div className="flex flex-col gap-2">
                 <a
                   href="tel:100"
-                  className="bg-blue-800 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 text-center"
+                  className="bg-[#5BA4D4] text-white px-5 py-2.5 rounded-xl hover:bg-[#4a90c0] text-center transition-colors"
                 >
                   Call Now
                 </a>
@@ -85,7 +85,7 @@ function Helpline() {
                 <a
                   href="https://maps.google.com/?q=Police+Station"
                   target="_blank"
-                  className="bg-sky-500 text-white px-5 py-2.5 rounded-xl hover:bg-gray-800 text-center"
+                  className="bg-gray-200 dark:bg-[#1B3A5C] text-gray-800 dark:text-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-300 dark:hover:bg-[#2A4B70] text-center transition-colors"
                 >
                   Location
                 </a>

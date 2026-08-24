@@ -1,33 +1,37 @@
 import React from "react";
-import { FiHome, FiBox, FiUsers, FiPhone, FiMoon } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { ToggleSwitch } from "flowbite-react";
-import { useState } from "react";
+import { FiHome, FiBox, FiUsers, FiPhone, FiTruck, FiShoppingBag } from "react-icons/fi";
+import { Link, useLocation } from "react-router-dom";
 
 export default function UsersSidebar() {
-  const [switch1, setSwitch1] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const getBtnClass = (path) => {
+    const isActive = currentPath === path;
+    const baseClass = "flex items-center space-x-3 px-4 py-3 w-full rounded-xl transition-colors duration-200";
+    
+    if (isActive) {
+      return `${baseClass} bg-[#5BA4D4] text-white shadow-md`;
+    }
+    return `${baseClass} ue-sidebar-btn text-gray-700 hover:bg-gray-100`;
+  };
+
   return (
     <div className="fixed top-24 left-4 w-56 h-[85vh]">
-      <div className="bg-white h-full p-6 rounded-3xl shadow-xl border border-gray-200 flex flex-col justify-between">
+      <div className="ue-sidebar bg-white h-full p-6 rounded-3xl shadow-xl border border-gray-200 flex flex-col justify-between transition-colors duration-300">
 
         <nav className="space-y-2">
           {/* Find Housing */}
           <Link to={"/housebook"}>
-          <button 
-            className="flex items-center space-x-3 px-4 py-3 w-full 
-            rounded-xl text-gray-700 hover:bg-gray-100"
-          >
+          <button className={getBtnClass("/housebook")}>
             <FiHome className="w-5 h-5" />
             <span>Find Housing</span>
           </button>
           </Link>
 
-          {/* Rent Appliances (Active) */}
+          {/* Rent Appliances */}
           <Link to={"/appliancesbook"}>
-          <button 
-            className="flex items-center space-x-3 px-4 py-3 w-full 
-            rounded-xl text-gray-700 hover:bg-gray-100"
-          >
+          <button className={getBtnClass("/appliancesbook")}>
             <FiBox className="w-5 h-5" />
             <span>Rent Appliance</span>
           </button>
@@ -35,37 +39,32 @@ export default function UsersSidebar() {
 
           {/* Find Helpers */}
           <Link to={"/services"}>
-          <button  
-            className="flex items-center space-x-3 px-4 py-3 w-full 
-            rounded-xl text-gray-700 hover:bg-gray-100"
-          >
+          <button className={getBtnClass("/services")}>
             <FiUsers className="w-5 h-5" />
             <span>Find Helpers</span>
           </button></Link>
 
           {/* Local Helplines */}
           <Link to={"/helpline"}>
-          <button
-            className="flex items-center space-x-3 px-4 py-3 w-full 
-            rounded-xl text-gray-700 hover:bg-gray-100"
-          >
+          <button className={getBtnClass("/helpline")}>
             <FiPhone className="w-5 h-5" />
             <span>Local Helplines</span>
           </button></Link>
-        </nav>
 
-        {/* DARK MODE */}
-        <div className="pt-4 border-t border-gray-100">
-          <button className="w-full flex items-center justify-between p-3 rounded-xl text-gray-600 hover:bg-gray-100">
-            <div className="flex items-center gap-3">
-              <FiMoon className="w-5 h-5" />
-              <span>Dark Mode</span>
-            </div>
-            <div className="flex max-w-md flex-col items-start gap-4">
-            <ToggleSwitch checked={switch1} label="" onChange={setSwitch1} /></div>
-           
-          </button>
-        </div>
+          {/* Rental Vehicles */}
+          <Link to={"/vehicle-rentals"}>
+          <button className={getBtnClass("/vehicle-rentals")}>
+            <FiTruck className="w-5 h-5" />
+            <span>Rental Vehicles</span>
+          </button></Link>
+
+          {/* Community Marketplace */}
+          <Link to={"/community-marketplace"}>
+          <button className={getBtnClass("/community-marketplace")}>
+            <FiShoppingBag className="w-5 h-5" />
+            <span>Community Market</span>
+          </button></Link>
+        </nav>
 
       </div>
     </div>

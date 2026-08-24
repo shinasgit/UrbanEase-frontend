@@ -18,7 +18,7 @@ function Home() {
       <Header />
 
       {/* MAIN CONTENT */}
-      <main className="pt-24">
+      <main className="ue-bg-page pt-24 transition-colors duration-300">
 
         
 
@@ -63,33 +63,33 @@ function Home() {
         </section>
 
         {/* FEATURES */}
-        <section className="py-16 bg-gray-100">
+        <section className="ue-section-alt py-16 bg-gray-100 transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+            <h2 className="ue-text-primary text-3xl font-bold text-center text-gray-900 mb-10">
               Why Choose UrbanEase?
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 className="text-lg font-semibold mb-2">Easy Booking</h3>
-                <p className="text-gray-600 text-sm">
+              <div className="ue-card bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+                <h3 className="ue-text-primary text-lg font-semibold mb-2">Easy Booking</h3>
+                <p className="ue-text-muted text-gray-600 text-sm">
                   Book houses and services in just a few clicks with transparent
                   pricing.
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 className="text-lg font-semibold mb-2">
+              <div className="ue-card bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+                <h3 className="ue-text-primary text-lg font-semibold mb-2">
                   Verified Providers
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="ue-text-muted text-gray-600 text-sm">
                   All service providers are verified for safety and quality.
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 className="text-lg font-semibold mb-2">Secure Payments</h3>
-                <p className="text-gray-600 text-sm">
+              <div className="ue-card bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+                <h3 className="ue-text-primary text-lg font-semibold mb-2">Secure Payments</h3>
+                <p className="ue-text-muted text-gray-600 text-sm">
                   Multiple payment options with complete transaction security.
                 </p>
               </div>
@@ -98,33 +98,33 @@ function Home() {
         </section>
 
         {/* SERVICES */}
-        <section id="services" className="py-16 bg-white">
+        <section id="services" className="ue-section-white py-16 bg-white transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+            <h2 className="ue-text-primary text-3xl font-bold text-center text-gray-900 mb-10">
               Popular Services
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
-                <FaHome className="text-4xl text-blue-600 mx-auto mb-4" />
-                <h4 className="font-semibold text-lg">House Booking</h4>
-                <p className="mt-2 text-sm text-gray-600">
+              <div className="ue-card p-6 shadow rounded-2xl text-center hover:shadow-lg transition-all duration-300">
+                <FaHome className="text-4xl text-blue-600 mx-auto mb-4" style={{color: 'var(--ue-sky)'}} />
+                <h4 className="ue-text-primary font-semibold text-lg">House Booking</h4>
+                <p className="ue-text-muted mt-2 text-sm text-gray-600">
                   Find PGs, hostels, flats and apartments easily.
                 </p>
               </div>
 
-              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
-                <FaTools className="text-4xl text-blue-600 mx-auto mb-4" />
-                <h4 className="font-semibold text-lg">Appliances</h4>
-                <p className="mt-2 text-sm text-gray-600">
+              <div className="ue-card p-6 shadow rounded-2xl text-center hover:shadow-lg transition-all duration-300">
+                <FaTools className="text-4xl text-blue-600 mx-auto mb-4" style={{color: 'var(--ue-sky)'}} />
+                <h4 className="ue-text-primary font-semibold text-lg">Appliances</h4>
+                <p className="ue-text-muted mt-2 text-sm text-gray-600">
                   Rent or repair appliances like washing machines and fridges.
                 </p>
               </div>
 
-              <div className="p-6 shadow rounded-2xl text-center hover:shadow-lg transition">
-                <FaBroom className="text-4xl text-blue-600 mx-auto mb-4" />
-                <h4 className="font-semibold text-lg">Cleaning Services</h4>
-                <p className="mt-2 text-sm text-gray-600">
+              <div className="ue-card p-6 shadow rounded-2xl text-center hover:shadow-lg transition-all duration-300">
+                <FaBroom className="text-4xl text-blue-600 mx-auto mb-4" style={{color: 'var(--ue-sky)'}} />
+                <h4 className="ue-text-primary font-semibold text-lg">Cleaning Services</h4>
+                <p className="ue-text-muted mt-2 text-sm text-gray-600">
                   Professional cleaning services at affordable prices.
                 </p>
               </div>

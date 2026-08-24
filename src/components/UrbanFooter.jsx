@@ -5,33 +5,33 @@ import { FaFacebook, FaInstagram, FaTwitter, FaEnvelope } from "react-icons/fa";
 
 export default function UrbanFooter() {
   return (
-    <footer className="w-full bg-white border-t mt-10">
+    <footer className="ue-footer w-full bg-white border-t mt-10 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
 
         {/* LEFT */}
         <div className="text-center md:text-left">
-          <h2 className="text-lg font-semibold text-blue-800">UrbanEase</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-lg font-extrabold text-[#5BA4D4]">UrbanEase</h2>
+          <p className="ue-text-muted text-sm text-gray-600">
             Making city life simple, smart, and stress-free.
           </p>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="ue-text-muted text-xs text-gray-500 mt-1">
             © 2025 UrbanEase. All rights reserved.
           </p>
         </div>
 
         {/* CENTER */}
-        <div className="flex flex-col items-center gap-2 text-sm text-gray-600">
+        <div className="flex flex-col items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-2">
-            <FaEnvelope className="text-blue-700" />
+            <FaEnvelope className="text-[#5BA4D4]" />
             <a
               href="mailto:support@urbanease.com"
-              className="hover:text-blue-700 transition"
+              className="ue-text-muted hover:text-[#5BA4D4] transition"
             >
               support@urbanease.com
             </a>
           </div>
-          <p className="text-xs text-gray-500">
-            Need help? We’re just a mail away.
+          <p className="ue-text-muted text-xs text-gray-500 dark:text-gray-500">
+            Need help? We're just a mail away.
           </p>
         </div>
 
